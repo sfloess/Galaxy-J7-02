@@ -14,11 +14,15 @@ Complete guide and scripts to transform a Samsung Galaxy J7 (Verizon) into a min
 
 | Metric | Before | After | Improvement |
 |--------|--------|-------|-------------|
-| Total Packages | 235 | 165 | **-30%** |
+| Total Packages | 236 | 144 enabled | **-39%** |
+| Disabled Packages | 0 | 92 | **92 bloat removed** |
 | Verizon Bloat | 9 apps | 0 apps | **-100%** |
-| Samsung Bloat | Heavy | Minimal | **~35 removed** |
+| Samsung Bloat | Heavy | Minimal | **~40 removed** |
 | Performance | Slow | Fast | **Significant** |
 | Battery Life | Poor | Better | **Improved** |
+| **Linux Environment** | None | **Full Debian** | **✅ Added** |
+| **SSH Server** | None | **OpenSSH** | **✅ Added** |
+| **Storage Available** | Limited | **81GB SD card** | **✅ Configured** |
 
 ## 🚀 Quick Start
 
@@ -80,6 +84,73 @@ This installs:
 - Custom bash configuration
 - Project directory structure
 
+### 4. Configure SD Card Storage
+
+```bash
+adb push scripts/setup_termux_sdcard.sh /sdcard/Download/
+```
+
+In Termux:
+
+```bash
+cp /sdcard/Download/setup_termux_sdcard.sh ~
+bash ~/setup_termux_sdcard.sh
+```
+
+This creates symlinks to use your SD card (81GB free) for:
+- Projects and code
+- Downloads
+- Scripts
+- Backups
+- Linux distributions
+
+### 5. Install Debian with OpenSSH
+
+```bash
+adb push scripts/install_debian_with_ssh.sh /sdcard/Download/
+```
+
+In Termux:
+
+```bash
+cp /sdcard/Download/install_debian_with_ssh.sh ~
+bash ~/install_debian_with_ssh.sh
+```
+
+This installs:
+- Full Debian Linux (Trixie)
+- OpenSSH server and client
+- All on SD card (~687MB)
+- Ready for remote access
+
+**Access Debian:**
+
+```bash
+# Enter Debian
+proot-distro login debian
+
+# Set root password
+passwd
+
+# Start SSH server
+/etc/init.d/ssh start
+
+# Exit Debian
+exit
+```
+
+**Remote Access:**
+
+```bash
+# Find phone IP (in Termux)
+ifconfig wlan0 | grep inet
+
+# SSH from another device
+ssh root@YOUR_PHONE_IP
+```
+
+See `docs/TERMUX_DEBIAN_GUIDE.md` for complete instructions.
+
 ## 📁 Repository Structure
 
 ```
@@ -89,6 +160,7 @@ Galaxy-J7-02/
 │   ├── DEBLOAT_SUMMARY.txt           # Bloatware removal summary
 │   ├── FINAL_SETUP_COMPLETE.txt      # Complete setup guide
 │   ├── TERMUX_QUICK_START.md         # Termux quick reference
+│   ├── TERMUX_DEBIAN_GUIDE.md        # Debian + SSH complete guide
 │   ├── mini_computer_setup_guide.md  # Usage guide
 │   ├── mini_computer_conversion_summary.md  # Detailed report
 │   ├── samsung_j7_bloatware_removal.md     # Bloatware reference
@@ -100,7 +172,9 @@ Galaxy-J7-02/
 │   ├── disable_bloatware.sh          # Phase 1 removal
 │   ├── disable_more_bloatware.sh     # Phase 2 removal
 │   ├── restore_all.sh                # Emergency restore
-│   └── termux_setup.sh               # Termux installer
+│   ├── termux_setup.sh               # Termux installer
+│   ├── setup_termux_sdcard.sh        # SD card configuration
+│   └── install_debian_with_ssh.sh    # Debian + OpenSSH installer
 ├── demos/                             # Demo projects
 │   ├── demo_hello_world.py           # Python web server
 │   ├── demo_file_organizer.py        # File organizer
@@ -167,27 +241,40 @@ This re-enables all previously disabled packages.
 
 ### Development
 - Write and test Python, JavaScript, PHP, Go, Ruby code
-- Run local web servers (Flask, Express, etc.)
+- Run local web servers (Flask, Django, Express, etc.)
+- Full Debian Linux environment with apt package manager
+- Install databases (PostgreSQL, MySQL, Redis)
 - Mobile app development and testing
 - Learn programming on the go
 
 ### Networking
 - SSH into remote servers
-- Run SSH server (access phone from computer)
+- **Run SSH server on phone** (access from any device)
+- **Full OpenSSH with key-based authentication**
 - Network scanning with nmap
 - Monitor network traffic
+- Remote development via SSH
+
+### System Administration
+- **Full Debian environment** - practice Linux skills
+- User management, permissions, services
+- **Run web servers** (nginx, apache)
+- Database administration
+- Container-like environments with proot
 
 ### Automation
 - File organization scripts
 - Automated backups
-- Task scheduling
+- Task scheduling (cron)
 - Android automation via Termux-API
 
 ### Learning
 - Linux command line mastery
 - Git version control
 - Web development
+- Server administration
 - Ethical hacking tools
+- DevOps practices
 
 ## 🎓 Demo Projects
 
@@ -299,11 +386,13 @@ adb shell pm enable PACKAGE_NAME
 
 ## 📊 Statistics
 
-- **Files Created:** 20
-- **Lines of Code:** 1000+
-- **Packages Removed:** 70
-- **Setup Time:** ~10 minutes
-- **Disk Space Freed:** ~500MB
+- **Files Created:** 25+
+- **Lines of Code:** 2000+
+- **Packages Removed:** 92 (Android bloatware)
+- **Setup Time:** ~15 minutes (includes Debian)
+- **Disk Space Freed:** ~500MB internal storage
+- **SD Card Used:** ~700MB (Debian with OpenSSH)
+- **SD Card Free:** 80GB+ for projects
 
 ## 🤝 Contributing
 
