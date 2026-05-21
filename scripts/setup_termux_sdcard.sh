@@ -1,7 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # Set up Termux to use SD card for storage
 # Part of Galaxy J7 Mini Computer Conversion Project
-# https://github.com/sfloess/Samsung-Galaxy-J7
+# https://github.com/FlossWare/Samsung-Galaxy-J7
 
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║   Configure Termux for SD Card Storage                      ║"

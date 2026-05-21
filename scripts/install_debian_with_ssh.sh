@@ -1,7 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # Install Debian with OpenSSH on SD card
 # Part of Galaxy J7 Mini Computer Conversion Project
-# https://github.com/sfloess/Samsung-Galaxy-J7
+# https://github.com/FlossWare/Samsung-Galaxy-J7
 
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║   Install Debian with OpenSSH on SD Card                    ║"

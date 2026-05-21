@@ -423,10 +423,10 @@ This project is released under the MIT License. See LICENSE file for details.
 
 ## 👤 Author
 
-**sfloess**
+**FlossWare**
 
-- GitHub: [@sfloess](https://github.com/sfloess)
-- Project: [Samsung-Galaxy-J7](https://github.com/sfloess/Samsung-Galaxy-J7)
+- GitHub: [@FlossWare](https://github.com/FlossWare)
+- Project: [Samsung-Galaxy-J7](https://github.com/FlossWare/Samsung-Galaxy-J7)
 
 ## 🎉 Acknowledgments
 

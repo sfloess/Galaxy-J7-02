@@ -6,7 +6,7 @@ The repository name can only be changed through GitHub's web interface. Follow t
 
 ### Step 1: Rename on GitHub
 
-1. Go to https://github.com/sfloess/Galaxy-J7-02
+1. Go to https://github.com/FlossWare/Galaxy-J7-02
 2. Click **Settings** (top right)
 3. Under "Repository name", change:
    - From: `Galaxy-J7-02`
@@ -24,7 +24,7 @@ After renaming on GitHub, update your local repository:
 
 ```bash
 cd ~/tmp/adb
-git remote set-url origin git@github.com:sfloess/Samsung-Galaxy-J7.git
+git remote set-url origin git@github.com:FlossWare/Samsung-Galaxy-J7.git
 git remote -v  # Verify the change
 ```
 
