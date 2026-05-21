@@ -154,7 +154,7 @@ See `docs/TERMUX_DEBIAN_GUIDE.md` for complete instructions.
 ## 📁 Repository Structure
 
 ```
-Galaxy-J7-02/
+Samsung-Galaxy-J7/
 ├── README.md                          # This file
 ├── docs/                              # Documentation
 │   ├── DEBLOAT_SUMMARY.txt           # Bloatware removal summary
@@ -426,7 +426,7 @@ This project is released under the MIT License. See LICENSE file for details.
 **sfloess**
 
 - GitHub: [@sfloess](https://github.com/sfloess)
-- Project: [Galaxy-J7-02](https://github.com/sfloess/Galaxy-J7-02)
+- Project: [Samsung-Galaxy-J7](https://github.com/sfloess/Samsung-Galaxy-J7)
 
 ## 🎉 Acknowledgments
 
