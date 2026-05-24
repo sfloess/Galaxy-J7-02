@@ -217,12 +217,22 @@ bash ~/setup_ssh_autostart.sh
 
 Then install **Termux:Boot** from F-Droid to enable auto-start on boot.
 
-**Access your phone remotely:**
+**Set password and access remotely:**
 
 ```bash
+# In Termux, set a password first
+passwd
+
 # From any device on your network
 ssh -p 8022 <YOUR_PHONE_IP>
+# Enter your password when prompted
 ```
+
+**Features:**
+- ✅ Password authentication enabled (set with `passwd`)
+- ✅ SSH key authentication also supported
+- ✅ Root login enabled in Debian
+- ✅ Auto-starts on boot
 
 See `docs/AUTO_START_SSH.md` for complete SSH auto-start guide.
 

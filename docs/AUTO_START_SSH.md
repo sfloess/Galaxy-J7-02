@@ -39,7 +39,26 @@ Or install from F-Droid: https://f-droid.org/packages/com.termux.boot/
 pkg install openssh
 ```
 
-### 3. Configure SSH Keys
+### 3. Set SSH Password (IMPORTANT!)
+
+**Before using SSH, set a password:**
+
+```bash
+# In Termux, set your user password
+passwd
+
+# Choose a STRONG password
+# This will be used for SSH login
+```
+
+**Why set a password?**
+- Password authentication is enabled for convenience
+- Anyone on your network can attempt to connect
+- A strong password protects your device
+
+### 4. Configure SSH Keys (Optional but Recommended)
+
+For password-free access, use SSH keys:
 
 ```bash
 # Generate SSH keys (if not already done)
@@ -57,7 +76,7 @@ chmod 600 ~/.ssh/authorized_keys
 # Then paste into ~/.ssh/authorized_keys (on phone)
 ```
 
-### 4. Create Boot Script
+### 5. Create Boot Script
 
 ```bash
 # Create boot scripts directory
@@ -82,14 +101,14 @@ EOF
 chmod +x ~/.termux/boot/start-sshd.sh
 ```
 
-### 5. Grant Boot Permission
+### 6. Grant Boot Permission
 
 On your phone:
 1. Open **Termux:Boot** app once (this is required!)
 2. Android will ask for permission to run on boot - **Allow**
 3. Close Termux:Boot
 
-### 6. Test It
+### 7. Test It
 
 ```bash
 # Reboot your phone
@@ -113,12 +132,24 @@ ssh -p 8022 <YOUR_PHONE_IP>
 
 Termux SSH runs on **port 8022** (not 22) because Android doesn't allow port 22 without root.
 
-```bash
-# Connect from another device
-ssh -p 8022 192.168.1.XXX
+**Authentication methods enabled:**
+- ✅ **Password authentication** - Login with the password you set via `passwd`
+- ✅ **Public key authentication** - Login with SSH keys (more secure)
 
-# Or use username
+```bash
+# Connect from another device WITH PASSWORD
+ssh -p 8022 192.168.1.XXX
+# Enter your password when prompted
+
+# Or use username explicitly
 ssh -p 8022 u0_a123@192.168.1.XXX
+```
+
+**IMPORTANT:** Set a strong password in Termux:
+```bash
+# In Termux
+passwd
+# Enter and confirm a strong password
 ```
 
 ### Find Your Username
@@ -151,16 +182,46 @@ On your phone:
 
 This ensures your phone always has the same IP address.
 
-### Password-Free SSH Access
+### Password vs Key Authentication
+
+**Password Authentication (Default):**
+- ✅ Easy to set up: just run `passwd` in Termux
+- ✅ Works from any computer without setup
+- ⚠️ Less secure: vulnerable to brute force attacks
+- ⚠️ Must type password every time
+
+**Key Authentication (Recommended for regular use):**
+- ✅ More secure: can't be brute-forced
+- ✅ No password needed after setup
+- ⚠️ Requires initial setup
+
+**Set up Key Authentication:**
 
 On your **computer** (not phone):
 
 ```bash
 # Copy your public key to phone
 ssh-copy-id -p 8022 192.168.1.100
+# Enter your Termux password when prompted
 
 # Now you can connect without password
 ssh -p 8022 192.168.1.100
+```
+
+**Optional: Disable Password Auth (Most Secure):**
+
+After setting up keys, you can disable password authentication:
+
+```bash
+# In Termux, edit sshd_config
+nano $PREFIX/etc/ssh/sshd_config
+
+# Change this line:
+PasswordAuthentication no
+
+# Save and restart SSH
+pkill sshd
+sshd
 ```
 
 ### Create SSH Config Shortcut
@@ -184,12 +245,31 @@ ssh galaxyj7
 
 If you want to auto-start the Debian environment with SSH:
 
+### Configure Debian for Root Password Login
+
+First, ensure Debian allows root login (this is done automatically by `install_debian_with_ssh.sh`):
+
+```bash
+# In Debian (proot-distro login debian)
+nano /etc/ssh/sshd_config
+
+# Ensure these settings:
+PermitRootLogin yes
+PasswordAuthentication yes
+
+# Set root password if not already set
+passwd
+# Enter a STRONG password for Debian root
+```
+
+### Auto-Start Debian SSH on Boot
+
 ```bash
 # Edit the boot script
 nano ~/.termux/boot/start-sshd.sh
 ```
 
-Add this:
+Replace with this:
 
 ```bash
 #!/data/data/com.termux/files/usr/bin/bash
@@ -197,7 +277,7 @@ Add this:
 # Wait for network
 sleep 10
 
-# Start Termux SSH server
+# Start Termux SSH server (port 8022)
 sshd
 
 # Start Debian and its SSH server
@@ -207,23 +287,69 @@ proot-distro login debian -- bash -c "
 " &
 
 # Log
-echo "$(date): Termux SSH (port 8022) and Debian SSH (port 22) started" >> ~/sshd-boot.log
-echo "IP: $(ifconfig wlan0 | grep 'inet ' | awk '{print $2}')" >> ~/sshd-boot.log
+{
+    echo "$(date): Termux SSH (port 8022) and Debian SSH (port 22) started"
+    echo "IP: $(ifconfig wlan0 2>/dev/null | grep 'inet ' | awk '{print $2}' || echo 'Not connected')"
+    echo "Termux user: $(whoami)"
+    echo "Debian root login: ENABLED with password"
+    echo "---"
+} >> ~/sshd-boot.log
 ```
 
-**Note:** Debian SSH runs on port 22 but **only inside the proot environment**. To access it, first SSH into Termux, then enter Debian.
+### Accessing Debian SSH
+
+**Important:** Debian SSH runs on port 22 but **only inside the proot environment**.
+
+**To access Debian:**
+
+```bash
+# Method 1: SSH to Termux, then enter Debian
+ssh -p 8022 192.168.1.100      # SSH to Termux
+proot-distro login debian       # Enter Debian
+# Now you're in Debian as root
+
+# Method 2: One-liner from remote computer
+ssh -p 8022 192.168.1.100 -t 'proot-distro login debian'
+```
+
+**Note:** You cannot SSH directly to port 22 on the phone. Debian's SSH server is isolated inside proot and not exposed to the network. You must always go through Termux first.
+
+### Debian Root Password
+
+Set a strong root password in Debian:
+
+```bash
+# Enter Debian
+proot-distro login debian
+
+# Set root password
+passwd
+# Enter a STRONG password (different from Termux password recommended)
+```
+
+This password is used:
+- When entering Debian from Termux
+- For sudo operations in Debian
+- For any Debian services requiring authentication
 
 ## Security Considerations
 
 ### ⚠️ Important Security Notes
 
-1. **Use SSH keys, not passwords** - Password authentication is less secure
-2. **Static IP recommended** - Makes blocking unauthorized access easier
-3. **Firewall rules** - Consider which devices can access your phone
-4. **Screen lock** - Boot scripts only run if phone is unlocked
-5. **Battery drain** - SSH server uses minimal battery, but keep phone charged
+1. **Set STRONG passwords** - Both Termux and Debian passwords should be strong
+   - Termux password: `passwd` (in Termux)
+   - Debian root password: `passwd` (in Debian proot)
+2. **Password authentication is enabled** - Convenient but less secure than keys
+   - For better security, use SSH keys and disable password auth
+3. **Static IP recommended** - Makes blocking unauthorized access easier
+4. **Firewall rules** - Consider which devices can access your phone
+5. **Screen lock** - Boot scripts only run if phone is unlocked
+6. **Battery drain** - SSH server uses minimal battery, but keep phone charged
+7. **Network security** - Only connect to trusted WiFi networks
 
-### Disable Password Authentication
+### Disable Password Authentication (Optional - Most Secure)
+
+**Only do this AFTER setting up SSH keys!**
 
 ```bash
 # Edit SSH config
@@ -236,11 +362,13 @@ PasswordAuthentication no
 PubkeyAuthentication yes
 ```
 
-Restart SSH:
+Save and restart SSH:
 ```bash
 pkill sshd
 sshd
 ```
+
+**Important:** Test key-based login works BEFORE disabling passwords, or you could lock yourself out!
 
 ### Restrict Access by IP
 
@@ -305,11 +433,19 @@ ping 192.168.1.100
 telnet 192.168.1.100 8022
 ```
 
-**Check 4:** Check SSH keys
+**Check 4:** Check authentication
 ```bash
-# On phone
+# On phone - verify password is set
+passwd
+# Will ask for current password if one exists
+
+# Or check SSH keys if using key auth
 cat ~/.ssh/authorized_keys
 # Should contain your computer's public key
+
+# Check SSH config
+grep -E "PasswordAuthentication|PubkeyAuthentication" $PREFIX/etc/ssh/sshd_config
+# Should show both enabled
 ```
 
 ### Phone IP Changes

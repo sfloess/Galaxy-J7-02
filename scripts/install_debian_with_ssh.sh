@@ -110,6 +110,30 @@ if [ $? -ne 0 ]; then
 fi
 
 echo ""
+echo "[4.5/5] Configuring Debian SSH for root login..."
+proot-distro login debian -- bash -c "
+    # Allow root login with password
+    if grep -q '^#PermitRootLogin' /etc/ssh/sshd_config; then
+        sed -i 's/^#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+    elif grep -q '^PermitRootLogin' /etc/ssh/sshd_config; then
+        sed -i 's/^PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+    else
+        echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
+    fi
+
+    # Enable password authentication
+    if grep -q '^#PasswordAuthentication' /etc/ssh/sshd_config; then
+        sed -i 's/^#PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+    elif grep -q '^PasswordAuthentication' /etc/ssh/sshd_config; then
+        sed -i 's/^PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+    else
+        echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config
+    fi
+
+    echo '✅ Debian SSH configured for root password login'
+"
+
+echo ""
 echo "[5/5] Checking installation size..."
 DU_SIZE=$(du -sh "$PROOT_DISTRO_DIR/debian" 2>/dev/null | cut -f1)
 if [ -n "$DU_SIZE" ]; then
@@ -125,10 +149,21 @@ echo "Debian with OpenSSH installed successfully!"
 echo ""
 echo "Storage: ~/projects-sd/linux-distros/debian (SD card)"
 echo ""
-echo "Next steps:"
-echo "  1. Enter Debian:     proot-distro login debian"
-echo "  2. Set root password: passwd"
-echo "  3. Start SSH server: /etc/init.d/ssh start"
+echo "SSH Configuration:"
+echo "  ✅ Root login: ENABLED"
+echo "  ✅ Password authentication: ENABLED"
 echo ""
-echo "See /sdcard/Download/DEBIAN_SSH_GUIDE.txt for full documentation"
+echo "Next steps:"
+echo "  1. Enter Debian:      proot-distro login debian"
+echo "  2. Set root password: passwd"
+echo "     (IMPORTANT: Set a STRONG password!)"
+echo "  3. Start SSH server:  /etc/init.d/ssh start"
+echo "  4. Find your IP:      ifconfig wlan0 | grep inet (in Termux)"
+echo "  5. SSH to Termux:     ssh -p 8022 <PHONE_IP>"
+echo "  6. Then enter Debian: proot-distro login debian"
+echo ""
+echo "Note: Debian SSH (port 22) only works INSIDE proot environment."
+echo "      Always SSH to Termux first (port 8022), then enter Debian."
+echo ""
+echo "See docs/AUTO_START_SSH.md and docs/TERMUX_DEBIAN_GUIDE.md"
 echo ""

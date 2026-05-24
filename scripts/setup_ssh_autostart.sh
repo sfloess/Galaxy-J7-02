@@ -29,6 +29,41 @@ touch ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 echo "✅ SSH directory configured"
 
+# Configure SSH to allow password authentication
+echo ""
+echo "[2.5/5] Configuring SSH server..."
+mkdir -p $PREFIX/etc/ssh
+if [ ! -f $PREFIX/etc/ssh/sshd_config ]; then
+    # Generate default config first
+    sshd 2>/dev/null
+    sleep 1
+    pkill sshd
+fi
+
+# Ensure password authentication is enabled
+if [ -f $PREFIX/etc/ssh/sshd_config ]; then
+    # Backup original config
+    cp $PREFIX/etc/ssh/sshd_config $PREFIX/etc/ssh/sshd_config.bak
+
+    # Enable password authentication (explicitly)
+    if grep -q "^PasswordAuthentication" $PREFIX/etc/ssh/sshd_config; then
+        sed -i 's/^PasswordAuthentication.*/PasswordAuthentication yes/' $PREFIX/etc/ssh/sshd_config
+    else
+        echo "PasswordAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
+    fi
+
+    # Allow public key authentication too
+    if grep -q "^PubkeyAuthentication" $PREFIX/etc/ssh/sshd_config; then
+        sed -i 's/^PubkeyAuthentication.*/PubkeyAuthentication yes/' $PREFIX/etc/ssh/sshd_config
+    else
+        echo "PubkeyAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
+    fi
+
+    echo "✅ SSH server configured for password and key authentication"
+else
+    echo "⚠️  sshd_config not found, using defaults"
+fi
+
 # Generate SSH keys if they don't exist
 echo ""
 echo "[3/5] Checking SSH keys..."
@@ -83,32 +118,44 @@ echo "╚═══════════════════════�
 echo ""
 echo "📋 Next Steps:"
 echo ""
-echo "1. Install Termux:Boot app:"
+echo "1. Set a password for SSH access:"
+echo "   passwd"
+echo "   (Choose a strong password!)"
+echo ""
+echo "2. Install Termux:Boot app:"
 echo "   https://f-droid.org/packages/com.termux.boot/"
 echo ""
-echo "2. Open Termux:Boot app ONCE to grant permissions"
+echo "3. Open Termux:Boot app ONCE to grant permissions"
 echo ""
-echo "3. Find your IP address:"
+echo "4. Find your IP address:"
 echo "   ifconfig wlan0 | grep inet"
 echo ""
-echo "4. Add your computer's public key for password-free access:"
-echo "   echo 'YOUR_PUBLIC_KEY' >> ~/.ssh/authorized_keys"
-echo ""
-echo "5. Connect from another device:"
+echo "5. Connect from another device with PASSWORD:"
 echo "   ssh -p 8022 $(whoami)@YOUR_PHONE_IP"
+echo "   (Enter the password you set in step 1)"
+echo ""
+echo "6. Optional - Add your computer's public key for password-free access:"
+echo "   echo 'YOUR_PUBLIC_KEY' >> ~/.ssh/authorized_keys"
 echo ""
 echo "📍 Current Status:"
 echo "   Username: $(whoami)"
 echo "   SSH Port: 8022"
 echo "   IP Address: $(ifconfig wlan0 2>/dev/null | grep 'inet ' | awk '{print $2}' || echo 'Not connected')"
+echo "   Authentication: Password + Key (both enabled)"
 echo ""
+echo "   Config File: $PREFIX/etc/ssh/sshd_config"
 echo "   Public Key: ~/.ssh/id_ed25519.pub"
 echo "   Authorized Keys: ~/.ssh/authorized_keys"
 echo "   Boot Script: ~/.termux/boot/start-sshd.sh"
 echo "   Boot Log: ~/sshd-boot.log"
 echo ""
-echo "🔒 Security Tip:"
-echo "   Copy ~/.ssh/id_ed25519.pub to your computer and use key-based auth"
+echo "🔒 Security Notes:"
+echo "   ✅ Password authentication: ENABLED (set password with 'passwd')"
+echo "   ✅ Public key authentication: ENABLED"
+echo "   ⚠️  Set a STRONG password - your phone will be accessible over network!"
+echo ""
+echo "   To disable password auth later (more secure):"
+echo "   Edit $PREFIX/etc/ssh/sshd_config and set: PasswordAuthentication no"
 echo ""
 echo "📖 Full documentation: docs/AUTO_START_SSH.md"
 echo ""
