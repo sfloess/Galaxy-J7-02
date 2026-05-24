@@ -418,6 +418,27 @@ Demonstrates:
 - USB cable
 - Linux/macOS computer (scripts use bash)
 
+## 📝 Script Types
+
+The repository contains two types of scripts designed for different environments:
+
+### Computer Scripts (Run via ADB)
+These scripts run on your **computer** and use ADB to communicate with the phone:
+- **Shebang**: `#!/bin/bash`
+- **Examples**: `aggressive_debloat.sh`, `restore_all.sh`, `check_prerequisites.sh`
+- **How to run**: Execute directly from your computer's terminal
+- **Purpose**: Debloating, package management, prerequisite checks
+
+### Termux Scripts (Run on Phone)
+These scripts run directly in **Termux** on your phone:
+- **Shebang**: `#!/data/data/com.termux/files/usr/bin/bash`
+- **Examples**: `termux_setup.sh`, `install_debian_with_ssh.sh`, `setup_termux_sdcard.sh`
+- **How to run**: Copy to phone via `adb push`, then execute in Termux terminal
+- **Purpose**: Termux setup, Debian installation, SSH configuration
+
+**Why different shebangs?**  
+Computer scripts use the standard system bash (`/bin/bash`), while Termux scripts use the Termux-specific bash location. This is normal and expected.
+
 ## 🔧 Advanced Usage
 
 ### Custom Debloat
