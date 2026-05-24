@@ -4,6 +4,78 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.4.0] - 2026-05-24
+
+### Added
+- **Minimal Setup Scripts** - New streamlined installation path
+  - `scripts/install_minimal_apps.sh` - Essential Termux setup (~100MB)
+    - Core utilities (grep, sed, awk)
+    - termux-auth for passwd command
+    - Git, Vim, curl, wget
+    - OpenSSH and htop
+    - proot-distro for Linux containers
+  - `scripts/install_desktop_minimal.sh` - Minimal desktop setup
+    - LXDE desktop environment only (~400MB)
+    - VNC server (TigerVNC)
+    - Auto-generated start/stop scripts
+    - htop for system monitoring
+- **Comprehensive Documentation**
+  - `docs/MINIMAL_SETUP_GUIDE.md` - Complete minimal setup guide
+    - Three setup paths: Minimal (~100MB), +Debian (~250MB), +Desktop (~650MB)
+    - Storage requirement breakdowns
+    - Alternative to full ~1.2GB installation
+    - Quick commands reference
+  - `docs/TERMUX_BOOT_SETUP.md` - Complete Termux:Boot guide
+    - Installation troubleshooting (signature mismatch, storage issues)
+    - Storage cleanup procedures
+    - Boot script configuration
+    - Alternative auto-start methods
+    - Security best practices
+    - Comprehensive troubleshooting section
+- **Termux:Boot Support** - Auto-start SSH servers on boot
+  - Successfully installed Termux:Boot v0.8.1
+  - Boot scripts created in `~/.termux/boot/`
+  - Logs to `~/ssh-boot.log`
+  - Starts both Termux and Debian SSH servers automatically
+  - One-time activation required (open app after install)
+- **htop Monitoring** - System monitor for both environments
+  - Included in minimal setup scripts
+  - Available in both Termux and Debian
+  - Real-time process and resource monitoring
+
+### Changed
+- **README.md** - Major reorganization
+  - Added "Choose Your Setup Path" section
+  - Four clear options: Minimal, +Debian, +Desktop, Everything
+  - Updated repository structure with new files
+  - Better organization for different use cases
+- **Installation philosophy** - Progressive enhancement
+  - Start minimal, add only what you need
+  - Clear storage requirements at each level
+  - Modular script approach
+
+### Fixed
+- **Storage space management** for Termux:Boot installation
+  - Cleaned Chrome and Play Store caches
+  - Uninstalled Google Photos and Gmail (freed ~19MB)
+  - Uninstalled additional Samsung bloat
+  - Freed space from 448MB to 502MB available
+- **Termux:Boot signature compatibility**
+  - Downloaded correct GitHub-signed version matching Termux
+  - Resolved INSTALL_FAILED_SHARED_USER_INCOMPATIBLE error
+  - Successfully installed 727KB APK
+- **proot installation** after reboot
+  - Documented in minimal setup script
+  - Included in essential package list
+
+### Technical Details
+- **Termux:Boot version**: v0.8.1 (June 22, 2024)
+- **Installation size**: 727KB APK
+- **Boot script location**: `~/.termux/boot/start-ssh-servers.sh`
+- **Log file**: `~/ssh-boot.log`
+- **Network wait time**: 10 seconds for WiFi/cellular to initialize
+- **Background process**: Debian SSH runs with `&` to not block
+
 ## [1.3.0] - 2026-05-24
 
 ### Added

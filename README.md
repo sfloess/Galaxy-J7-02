@@ -57,6 +57,28 @@ These scripts **may work** on other Galaxy J7 models but with differences:
 
 ## 🚀 Quick Start
 
+### Choose Your Setup Path
+
+**Option 1: Minimal Setup** (~100MB) - Recommended for beginners  
+Essential tools only: Termux + SSH + Git + htop  
+📖 Guide: [docs/MINIMAL_SETUP_GUIDE.md](docs/MINIMAL_SETUP_GUIDE.md)
+
+**Option 2: Minimal + Debian** (~250MB) - Recommended for developers  
+Adds full Linux with apt package manager  
+📖 Guide: [docs/MINIMAL_SETUP_GUIDE.md](docs/MINIMAL_SETUP_GUIDE.md)
+
+**Option 3: Full Desktop Environment** (~650MB) - For remote desktop access  
+Includes LXDE desktop + VNC server  
+📖 Guide: [docs/MINIMAL_SETUP_GUIDE.md](docs/MINIMAL_SETUP_GUIDE.md)
+
+**Option 4: Everything** (~1.2GB) - Maximum features  
+All desktop environments (LXDE, FVWM, JWM) + VNC  
+📖 Follow the complete guide below
+
+---
+
+## 📖 Complete Setup Guide
+
 ### 0. Check Prerequisites (NEW!)
 
 **IMPORTANT**: Run this first on a fresh device:
@@ -244,27 +266,34 @@ See `docs/AUTO_START_SSH.md` for complete SSH auto-start guide.
 Samsung-Galaxy-J7/
 ├── README.md                          # This file
 ├── docs/                              # Documentation
-│   ├── AUTO_START_SSH.md             # ⭐ NEW: Auto-start SSH server on boot
+│   ├── MINIMAL_SETUP_GUIDE.md        # ⭐ NEW: Minimal installation guide
+│   ├── TERMUX_BOOT_SETUP.md          # ⭐ NEW: Complete Termux:Boot guide
+│   ├── AUTO_START_SSH.md             # Auto-start SSH server on boot
+│   ├── TERMUX_DEBIAN_GUIDE.md        # Debian + SSH complete guide
+│   ├── DEBIAN_DESKTOP_COMPLETE.md    # Desktop environment guide
+│   ├── TERMUX_QUICK_START.md         # Termux quick reference
 │   ├── DEBLOAT_SUMMARY.txt           # Bloatware removal summary
 │   ├── FINAL_SETUP_COMPLETE.txt      # Complete setup guide
-│   ├── TERMUX_QUICK_START.md         # Termux quick reference
-│   ├── TERMUX_DEBIAN_GUIDE.md        # Debian + SSH complete guide
 │   ├── mini_computer_setup_guide.md  # Usage guide
 │   ├── mini_computer_conversion_summary.md  # Detailed report
 │   ├── samsung_j7_bloatware_removal.md     # Bloatware reference
 │   ├── storage_and_bloatware_report.md     # Storage analysis
 │   └── install_termux_fdroid.md      # Installation guide
 ├── scripts/                           # All scripts
-│   ├── check_prerequisites.sh        # ⭐ Check device compatibility
-│   ├── aggressive_debloat.sh         # Main debloat script (improved error handling)
-│   ├── setup_ssh_autostart.sh        # ⭐ NEW: Auto-start SSH on boot
+│   ├── install_minimal_apps.sh       # ⭐ NEW: Minimal Termux setup (100MB)
+│   ├── install_desktop_minimal.sh    # ⭐ NEW: Minimal desktop setup (LXDE + VNC)
+│   ├── check_prerequisites.sh        # Check device compatibility
+│   ├── aggressive_debloat.sh         # Main debloat script
+│   ├── setup_ssh_autostart.sh        # Auto-start SSH on boot
 │   ├── safe_bloatware_removal.sh     # Conservative debloat
 │   ├── disable_bloatware.sh          # Phase 1 removal
 │   ├── disable_more_bloatware.sh     # Phase 2 removal
 │   ├── restore_all.sh                # Emergency restore
-│   ├── termux_setup.sh               # Termux installer
-│   ├── setup_termux_sdcard.sh        # SD card configuration (fixed symlinks)
-│   └── install_debian_with_ssh.sh    # Debian + OpenSSH installer (added validation)
+│   ├── termux_setup.sh               # Full Termux installer
+│   ├── setup_termux_sdcard.sh        # SD card configuration
+│   ├── install_debian_with_ssh.sh    # Debian + OpenSSH installer
+│   ├── start_desktop.sh              # Desktop launcher (auto-generated)
+│   └── stop_desktop.sh               # Desktop stop script (auto-generated)
 ├── demos/                             # Demo projects
 │   ├── demo_hello_world.py           # Python web server
 │   ├── demo_file_organizer.py        # File organizer
@@ -497,12 +526,21 @@ adb shell pm enable PACKAGE_NAME
 
 ## 📊 Statistics
 
-- **Files Created:** 25+
-- **Lines of Code:** 2000+
+- **Files Created:** 30+
+- **Lines of Code:** 2500+
+- **Documentation Pages:** 13
 - **Packages Removed:** 92 (Android bloatware)
-- **Setup Time:** ~15 minutes (includes Debian)
+- **Setup Time:** 
+  - Minimal: ~5 minutes (~100MB)
+  - With Debian: ~10 minutes (~250MB)
+  - With Desktop: ~20 minutes (~650MB)
+  - Full Everything: ~45 minutes (~1.2GB)
 - **Disk Space Freed:** ~500MB internal storage
-- **SD Card Used:** ~700MB (Debian with OpenSSH)
+- **SD Card Options:**
+  - Minimal: ~100MB
+  - + Debian: ~250MB
+  - + Desktop (LXDE): ~650MB
+  - + All Desktops (LXDE, FVWM, JWM): ~1.2GB
 - **SD Card Free:** 80GB+ for projects
 
 ## 🤝 Contributing
