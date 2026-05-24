@@ -28,7 +28,7 @@ Generated: 2026-05-21
 - Free: 3.9GB
 - Mount: `/storage/emulated/0/`
 
-**Recommendation:** Continue using SD card for photos/videos. You have plenty of space (81GB free).
+**Recommendation:** Continue using SD card for photos/videos. You have plenty of space (SD card).
 
 ## 3. Additional Bloatware Candidates
 

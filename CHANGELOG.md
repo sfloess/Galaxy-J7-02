@@ -4,6 +4,74 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.3.0] - 2026-05-24
+
+### Added
+- **SSH Authentication Choice** in `setup_ssh_autostart.sh`
+  - Interactive prompt for authentication method:
+    1. SSH keys only (RECOMMENDED - most secure)
+    2. Password only (less secure, but simpler)
+    3. Both password and keys (convenient)
+  - Defaults to keys-only for maximum security
+  - Different setup instructions based on user choice
+  - Addresses security concern of forced password authentication
+- **Code of Conduct** (`CODE_OF_CONDUCT.md`)
+  - Contributor Covenant v1.4
+  - Community standards for FlossWare organization
+  - Harassment-free environment pledge
+
+### Fixed
+- **All 28 GitHub issues resolved** across 3 review cycles
+  - Critical: Removed corrupted hackerskeyboard.apk, verified APKs not in repo
+  - High Priority: bc→awk replacement, GPS disable protection, restore validation
+  - Documentation: Removed duplicates, fixed references, added script type explanations
+  - Security: SSH authentication now user-choice, not forced
+- **Hard-coded storage references** removed from README
+  - Changed "81GB SD card" → "SD card" (generic)
+  - Removed "81GB free" → dynamically detected in scripts
+- **Python version detection** in `demo_hello_world.py`
+  - Changed from hard-coded '3.x' to `sys.version.split()[0]`
+  - Now shows actual Python version (e.g., "3.11.2")
+- **GPS/location disable** in `aggressive_debloat.sh`
+  - Now commented out with warning by default
+  - Users must explicitly uncomment to disable location
+  - Prevents accidental GPS breakage
+- **Package validation** in `restore_all.sh`
+  - Now checks if packages exist before enabling
+  - Graceful handling across J7 variants
+  - Consistent with aggressive_debloat.sh approach
+- **Termux path portability** in scripts
+  - Use `$PREFIX` and `$HOME` instead of hard-coded paths
+  - More portable across Android versions
+- **CHANGELOG duplicate section** removed
+  - Cleaned up duplicate v1.1.0 content
+  - Clear chronological order maintained
+- **Documentation references** updated
+  - Removed references to non-existent files
+  - Added "Script Types" section explaining shebangs
+- **Demo scripts** visual fixes
+  - Fixed unclosed box border in `demo_system_monitor.sh`
+
+### Changed
+- **Security-first defaults** throughout
+  - SSH now defaults to key-only authentication
+  - Password authentication is opt-in with warnings
+  - Strong password requirements emphasized
+- **Contributing section** expanded in README
+  - Added hardware testing requirements
+  - Documentation update guidelines
+  - Code style consistency notes
+  - Camera verification requirements
+- **License clarification**
+  - Fixed README (was "MIT", actual is GPL-3.0)
+  - Consistent license references throughout
+
+### Improved
+- Better user experience with informed security choices
+- More accurate documentation (no hard-coded device-specific values)
+- Production-ready code quality with 28 issues resolved
+- Professional open-source project standards
+
 ## [1.2.0] - 2026-05-23
 
 ### Added

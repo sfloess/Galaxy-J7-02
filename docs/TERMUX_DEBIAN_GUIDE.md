@@ -17,7 +17,7 @@ Complete guide for setting up Termux with Debian Linux on your Samsung Galaxy J7
 This setup transforms your Samsung J7 into a portable Linux development machine by:
 
 1. **Installing Termux** - Linux terminal environment for Android
-2. **Configuring SD Card Storage** - Use 81GB SD card instead of limited internal storage
+2. **Configuring SD Card Storage** - Use SD card instead of limited internal storage
 3. **Installing Debian** - Full Linux distribution via proot
 4. **Setting up OpenSSH** - Remote access capabilities
 
@@ -27,7 +27,7 @@ This setup transforms your Samsung J7 into a portable Linux development machine 
 - ✅ Package manager (apt) with 1000s of packages
 - ✅ SSH server for remote access
 - ✅ Development tools (git, python3, nodejs, vim, etc.)
-- ✅ All stored on SD card (81GB available)
+- ✅ All stored on SD card (SD card)
 - ✅ No root required
 
 ## Prerequisites
@@ -102,7 +102,7 @@ The `setup_termux_sdcard.sh` script creates:
 ```
 
 Benefits:
-- 81GB free space on SD card
+- SD card space on SD card
 - Internal storage saved for executables
 - Projects and data on removable storage
 

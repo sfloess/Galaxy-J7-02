@@ -362,6 +362,6 @@ Your Samsung J7 is now:
 - ✅ Camera working perfectly
 - ✅ Ready for development
 - ✅ Optimized for mini computer use
-- ✅ Saving photos to SD card (81GB free)
+- ✅ Saving photos to SD card (SD card)
 
 **Next:** Install Termux and start coding! 🚀

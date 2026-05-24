@@ -567,4 +567,4 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 **Made with ❤️ by someone who wanted a mini computer in their pocket**
 
-Last Updated: 2026-05-23
+Last Updated: 2026-05-24

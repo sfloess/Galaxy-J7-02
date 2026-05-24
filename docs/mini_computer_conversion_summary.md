@@ -171,7 +171,7 @@ Your Samsung J7 has been transformed into a minimal Android mini computer with:
 ## 📱 Current System Status
 
 **Storage:**
-- SD Card: 81GB free (photos/videos save here)
+- SD Card: SD card (photos/videos save here)
 - Internal: 3.9GB free
 
 **Packages:**

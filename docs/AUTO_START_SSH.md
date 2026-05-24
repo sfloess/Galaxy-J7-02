@@ -32,51 +32,115 @@ adb install apps/termux-boot.apk
 
 Or install from F-Droid: https://f-droid.org/packages/com.termux.boot/
 
-### 2. Install OpenSSH in Termux
+### 2. Run Automated Setup Script
+
+**RECOMMENDED:** Use the automated setup script:
+
+```bash
+# Push script to phone
+adb push scripts/setup_ssh_autostart.sh /sdcard/Download/
+
+# In Termux
+cp /sdcard/Download/setup_ssh_autostart.sh ~
+bash ~/setup_ssh_autostart.sh
+```
+
+The script will:
+1. Install OpenSSH
+2. **Ask you to choose authentication method** (see below)
+3. Generate SSH keys
+4. Create boot script
+5. Test SSH server
+
+Skip to step 6 if using the automated script.
+
+### 3. Choose Authentication Method (IMPORTANT!)
+
+The setup script will prompt you with 3 options:
+
+```
+🔒 SSH Authentication Method:
+   1) SSH keys only (RECOMMENDED - most secure)
+   2) Password only (less secure, but simpler)
+   3) Both password and keys (convenient)
+
+Choose option (1-3) [default: 1]:
+```
+
+**Option 1: SSH Keys Only (RECOMMENDED)**
+- ✅ Most secure
+- ✅ No password needed once keys are set up
+- ✅ Immune to brute-force attacks
+- ⚠️  Requires copying your public key to phone
+
+**Option 2: Password Only**
+- ⚠️  Less secure than keys
+- ✅ Simpler to set up
+- ⚠️  Vulnerable to brute-force if weak password
+- ⚠️  Must use STRONG password
+
+**Option 3: Both Methods**
+- ✅ Convenient (use keys or password)
+- ⚠️  Less secure than keys-only
+- ⚠️  Must use STRONG password
+
+### 4. Manual Setup (Alternative to Script)
+
+If you prefer manual setup instead of the automated script:
+
+#### Install OpenSSH
 
 ```bash
 # In Termux
 pkg install openssh
 ```
 
-### 3. Set SSH Password (IMPORTANT!)
+#### Configure Authentication
 
-**Before using SSH, set a password:**
-
+For **Option 1 (Keys Only)**:
 ```bash
-# In Termux, set your user password
-passwd
-
-# Choose a STRONG password
-# This will be used for SSH login
-```
-
-**Why set a password?**
-- Password authentication is enabled for convenience
-- Anyone on your network can attempt to connect
-- A strong password protects your device
-
-### 4. Configure SSH Keys (Optional but Recommended)
-
-For password-free access, use SSH keys:
-
-```bash
-# Generate SSH keys (if not already done)
+# Generate SSH keys
 ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519
 
-# Set up authorized_keys for remote access
+# Set up authorized_keys
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 touch ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 
-# Add your public key from your computer
-# Copy your computer's public key and paste it:
-# cat ~/.ssh/id_rsa.pub (on your computer)
-# Then paste into ~/.ssh/authorized_keys (on phone)
+# Add your computer's public key
+# From your computer: cat ~/.ssh/id_rsa.pub
+# Paste the output into ~/.ssh/authorized_keys on phone
+
+# Configure sshd for keys only
+echo "PubkeyAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
+echo "PasswordAuthentication no" >> $PREFIX/etc/ssh/sshd_config
 ```
 
-### 5. Create Boot Script
+For **Option 2 (Password Only)**:
+```bash
+# Set a STRONG password
+passwd
+
+# Configure sshd for password only
+echo "PasswordAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
+echo "PubkeyAuthentication no" >> $PREFIX/etc/ssh/sshd_config
+```
+
+For **Option 3 (Both)**:
+```bash
+# Set password
+passwd
+
+# Set up keys (see Option 1 above)
+# ... 
+
+# Configure sshd for both
+echo "PubkeyAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
+echo "PasswordAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
+```
+
+### 5. Create Boot Script (Manual Setup)
 
 ```bash
 # Create boot scripts directory
