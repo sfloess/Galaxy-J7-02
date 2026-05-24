@@ -153,7 +153,9 @@ passwd
 
 ## Desktop Environment (Optional)
 
-For graphical desktop access via VNC:
+For graphical desktop access via VNC.
+
+> **📖 Complete VNC Guide:** See [VNC_DESKTOP_GUIDE.md](VNC_DESKTOP_GUIDE.md) for comprehensive VNC setup, troubleshooting, and configuration.
 
 ```bash
 # Copy and run desktop installer

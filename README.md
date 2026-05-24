@@ -268,9 +268,9 @@ Samsung-Galaxy-J7/
 ├── docs/                              # Documentation
 │   ├── MINIMAL_SETUP_GUIDE.md        # ⭐ NEW: Minimal installation guide
 │   ├── TERMUX_BOOT_SETUP.md          # ⭐ NEW: Complete Termux:Boot guide
+│   ├── VNC_DESKTOP_GUIDE.md          # ⭐ NEW: Complete VNC/desktop guide
 │   ├── AUTO_START_SSH.md             # Auto-start SSH server on boot
 │   ├── TERMUX_DEBIAN_GUIDE.md        # Debian + SSH complete guide
-│   ├── DEBIAN_DESKTOP_COMPLETE.md    # Desktop environment guide
 │   ├── TERMUX_QUICK_START.md         # Termux quick reference
 │   ├── DEBLOAT_SUMMARY.txt           # Bloatware removal summary
 │   ├── FINAL_SETUP_COMPLETE.txt      # Complete setup guide

@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.4.1] - 2026-05-24
+
+### Added
+- **VNC_DESKTOP_GUIDE.md** - Comprehensive VNC and desktop environment documentation
+  - Complete installation instructions for TigerVNC
+  - Step-by-step connection guide for all platforms (Windows, Mac, Linux, Android, iOS)
+  - Recommended VNC clients for each platform
+  - Desktop usage instructions (file manager, terminal, applications)
+  - Comprehensive troubleshooting section
+  - Advanced configuration (resolution, password, multiple displays, SSH tunneling)
+  - Performance optimization tips
+  - Security recommendations
+  - Quick reference commands
+
+### Changed
+- **MINIMAL_SETUP_GUIDE.md** - Added reference to VNC_DESKTOP_GUIDE.md
+- **README.md** - Updated docs structure with VNC guide
+- **FINAL_SETUP_COMPLETE.txt** - Added VNC guide to available guides list
+
+### Fixed
+- Documentation gap: VNC setup was in scripts but lacked comprehensive user guide
+- README referenced non-existent DEBIAN_DESKTOP_COMPLETE.md, now replaced with VNC_DESKTOP_GUIDE.md
+
 ## [1.4.0] - 2026-05-24
 
 ### Added
