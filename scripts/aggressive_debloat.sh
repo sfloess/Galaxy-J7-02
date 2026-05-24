@@ -2,6 +2,21 @@
 # AGGRESSIVE Debloat - Turn Samsung J7 into a mini computer
 # Removes all non-essential bloatware while keeping camera and core Android
 
+# Check ADB connection first
+if ! command -v adb &> /dev/null; then
+    echo "❌ ERROR: ADB not found in PATH"
+    echo "   Install Android SDK Platform Tools"
+    exit 1
+fi
+
+if ! adb devices 2>/dev/null | grep -q "device$"; then
+    echo "❌ ERROR: No Android device connected"
+    echo "   1. Enable USB Debugging on your phone"
+    echo "   2. Connect via USB"
+    echo "   3. Accept authorization prompt on phone"
+    exit 1
+fi
+
 echo "🚀 AGGRESSIVE DEBLOAT MODE"
 echo ""
 echo "This will transform your phone into a minimal Android computer."
@@ -30,88 +45,104 @@ then
     exit 1
 fi
 
+# Helper function to safely disable packages
+disable_package() {
+    local pkg=$1
+    # Check if package exists first
+    if adb shell pm list packages 2>/dev/null | grep -q "^package:${pkg}$"; then
+        adb shell pm disable-user --user 0 "$pkg" 2>/dev/null
+        if [ $? -eq 0 ]; then
+            echo "  ✓ Disabled: $pkg"
+        else
+            echo "  ⚠ Failed: $pkg (may require special permissions)"
+        fi
+    else
+        echo "  - Skipped: $pkg (not installed on this device)"
+    fi
+}
+
 echo ""
 echo "🗑️  Phase 1: Samsung Account & Cloud Services"
 
-adb shell pm disable-user --user 0 com.samsung.android.mobileservice
-adb shell pm disable-user --user 0 com.osp.app.signin
-adb shell pm disable-user --user 0 com.samsung.android.scloud
-adb shell pm disable-user --user 0 com.samsung.android.samsungpass
+disable_package com.samsung.android.mobileservice
+disable_package com.osp.app.signin
+disable_package com.samsung.android.scloud
+disable_package com.samsung.android.samsungpass
 
 echo "🗑️  Phase 2: Samsung Smart Features"
 
-adb shell pm disable-user --user 0 com.samsung.android.smartmirroring
-adb shell pm disable-user --user 0 com.samsung.advancedcalling
-adb shell pm disable-user --user 0 com.samsung.advp.imssettings
-adb shell pm disable-user --user 0 com.samsung.android.da.daagent
-adb shell pm disable-user --user 0 com.samsung.SMT
+disable_package com.samsung.android.smartmirroring
+disable_package com.samsung.advancedcalling
+disable_package com.samsung.advp.imssettings
+disable_package com.samsung.android.da.daagent
+disable_package com.samsung.SMT
 
 echo "🗑️  Phase 3: Samsung UI & Customization"
 
-adb shell pm disable-user --user 0 com.samsung.android.themestore
-adb shell pm disable-user --user 0 com.sec.android.app.personalization
-adb shell pm disable-user --user 0 com.android.wallpapercropper
-adb shell pm disable-user --user 0 com.sec.android.wallpapercropper2
-adb shell pm disable-user --user 0 com.android.wallpaper.livepicker
-adb shell pm disable-user --user 0 com.android.dreams.basic
-adb shell pm disable-user --user 0 com.android.dreams.phototable
+disable_package com.samsung.android.themestore
+disable_package com.sec.android.app.personalization
+disable_package com.android.wallpapercropper
+disable_package com.sec.android.wallpapercropper2
+disable_package com.android.wallpaper.livepicker
+disable_package com.android.dreams.basic
+disable_package com.android.dreams.phototable
 
 echo "🗑️  Phase 4: Accessibility Features (if you don't use them)"
 
-adb shell pm disable-user --user 0 com.samsung.android.app.assistantmenu
-adb shell pm disable-user --user 0 com.google.android.marvin.talkback
-adb shell pm disable-user --user 0 com.samsung.android.app.accesscontrol
-adb shell pm disable-user --user 0 com.sec.hearingadjust
+disable_package com.samsung.android.app.assistantmenu
+disable_package com.google.android.marvin.talkback
+disable_package com.samsung.android.app.accesscontrol
+disable_package com.sec.hearingadjust
 
 echo "🗑️  Phase 5: Google Apps (keeping essentials)"
 
-adb shell pm disable-user --user 0 com.google.android.gm  # Gmail
-adb shell pm disable-user --user 0 com.google.android.tts  # Text-to-speech
-adb shell pm disable-user --user 0 com.google.android.apps.photos  # Google Photos
-adb shell pm disable-user --user 0 com.google.android.googlequicksearchbox  # Google search
-adb shell pm disable-user --user 0 com.google.android.feedback
-adb shell pm disable-user --user 0 com.google.android.printservice.recommendation
-adb shell pm disable-user --user 0 com.google.android.setupwizard
-adb shell pm disable-user --user 0 com.google.android.partnersetup
-adb shell pm disable-user --user 0 com.google.android.syncadapters.contacts
-adb shell pm disable-user --user 0 com.google.android.syncadapters.calendar
-adb shell pm disable-user --user 0 com.google.android.backuptransport
+disable_package com.google.android.gm  # Gmail
+disable_package com.google.android.tts  # Text-to-speech
+disable_package com.google.android.apps.photos  # Google Photos
+disable_package com.google.android.googlequicksearchbox  # Google search
+disable_package com.google.android.feedback
+disable_package com.google.android.printservice.recommendation
+disable_package com.google.android.setupwizard
+disable_package com.google.android.partnersetup
+disable_package com.google.android.syncadapters.contacts
+disable_package com.google.android.syncadapters.calendar
+disable_package com.google.android.backuptransport
 
 echo "🗑️  Phase 6: Print & Document Services"
 
-adb shell pm disable-user --user 0 com.android.printspooler
-adb shell pm disable-user --user 0 com.android.bips
-adb shell pm disable-user --user 0 com.android.documentsui
+disable_package com.android.printspooler
+disable_package com.android.bips
+disable_package com.android.documentsui
 
 echo "🗑️  Phase 7: Samsung System Services (non-critical)"
 
-adb shell pm disable-user --user 0 com.samsung.android.app.soundpicker
-adb shell pm disable-user --user 0 com.sec.android.app.soundalive
-adb shell pm disable-user --user 0 com.samsung.android.location  # Warning: may affect GPS
-adb shell pm disable-user --user 0 com.samsung.networkui
-adb shell pm disable-user --user 0 com.samsung.android.timezone.autoupdate_O
-adb shell pm disable-user --user 0 com.samsung.unifiedsettingservice
+disable_package com.samsung.android.app.soundpicker
+disable_package com.sec.android.app.soundalive
+disable_package com.samsung.android.location  # Warning: may affect GPS
+disable_package com.samsung.networkui
+disable_package com.samsung.android.timezone.autoupdate_O
+disable_package com.samsung.unifiedsettingservice
 
 echo "🗑️  Phase 8: VPN & Enterprise"
 
-adb shell pm disable-user --user 0 com.android.vpndialogs
-adb shell pm disable-user --user 0 com.knox.vpn.proxyhandler
-adb shell pm disable-user --user 0 com.sec.enterprise.mdm.vpn
-adb shell pm disable-user --user 0 com.android.managedprovisioning
+disable_package com.android.vpndialogs
+disable_package com.knox.vpn.proxyhandler
+disable_package com.sec.enterprise.mdm.vpn
+disable_package com.android.managedprovisioning
 
 echo "🗑️  Phase 9: Miscellaneous Bloat"
 
-adb shell pm disable-user --user 0 com.android.egg  # Easter egg
-adb shell pm disable-user --user 0 com.sec.android.easyMover.Agent
-adb shell pm disable-user --user 0 com.sec.android.app.setupwizard
-adb shell pm disable-user --user 0 com.samsung.huxextension
-adb shell pm disable-user --user 0 com.sec.android.app.DataCreate
-adb shell pm disable-user --user 0 com.sec.android.emergencymode.service
-adb shell pm disable-user --user 0 com.sec.android.provider.emergencymode
+disable_package com.android.egg  # Easter egg
+disable_package com.sec.android.easyMover.Agent
+disable_package com.sec.android.app.setupwizard
+disable_package com.samsung.huxextension
+disable_package com.sec.android.app.DataCreate
+disable_package com.sec.android.emergencymode.service
+disable_package com.sec.android.provider.emergencymode
 
 echo "🗑️  Phase 10: Photo/Image Extras"
 
-adb shell pm disable-user --user 0 com.sec.android.mimage.photoretouching
+disable_package com.sec.android.mimage.photoretouching
 
 echo ""
 echo "✅ AGGRESSIVE DEBLOAT COMPLETE!"

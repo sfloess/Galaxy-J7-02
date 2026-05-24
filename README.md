@@ -24,7 +24,56 @@ Complete guide and scripts to transform a Samsung Galaxy J7 (Verizon) into a min
 | **SSH Server** | None | **OpenSSH** | **✅ Added** |
 | **Storage Available** | Limited | **81GB SD card** | **✅ Configured** |
 
+## ⚠️ Device Compatibility
+
+### Tested Device
+- **Model**: Samsung Galaxy J7 (SM-J727V)
+- **Carrier**: Verizon
+- **Android**: 8.1.0
+
+### Other J7 Variants
+These scripts **may work** on other Galaxy J7 models but with differences:
+
+| Variant | Model | Notes |
+|---------|-------|-------|
+| J7 Prime | SM-G610F | Different bloat packages, unlocked |
+| J7 Pro | SM-J730F | Different Samsung apps |
+| J7 (2017) | SM-J727T | T-Mobile bloat instead of Verizon |
+| J7 Sky Pro | SM-S737TL | TracFone/prepaid bloat |
+| J7 Perx | SM-J727P | Sprint bloat (legacy) |
+
+**Before running on a different variant:**
+1. Run `scripts/check_prerequisites.sh` first
+2. Review which packages will be disabled
+3. Some packages may not exist (script will skip them)
+4. Carrier-specific bloat will differ
+
+### What Differs Between Variants
+- **Carrier bloat**: Verizon, T-Mobile, AT&T, Sprint apps
+- **Region-specific apps**: Some Samsung apps vary by country
+- **Android version**: Scripts tested on 8.1.0, may work on 7.x-9.x
+
+**Golden rule**: Test the camera immediately after debloating!
+
 ## 🚀 Quick Start
+
+### 0. Check Prerequisites (NEW!)
+
+**IMPORTANT**: Run this first on a fresh device:
+
+```bash
+bash scripts/check_prerequisites.sh
+```
+
+This validates:
+- ADB connection
+- Device model compatibility  
+- Android version
+- Termux installation status
+- SD card presence and space
+- USB debugging capabilities
+
+### 1. Debloat the Device
 
 ### 1. Debloat the Device
 
@@ -167,14 +216,15 @@ Samsung-Galaxy-J7/
 │   ├── storage_and_bloatware_report.md     # Storage analysis
 │   └── install_termux_fdroid.md      # Installation guide
 ├── scripts/                           # All scripts
-│   ├── aggressive_debloat.sh         # Main debloat script
+│   ├── check_prerequisites.sh        # ⭐ NEW: Check device compatibility
+│   ├── aggressive_debloat.sh         # Main debloat script (improved error handling)
 │   ├── safe_bloatware_removal.sh     # Conservative debloat
 │   ├── disable_bloatware.sh          # Phase 1 removal
 │   ├── disable_more_bloatware.sh     # Phase 2 removal
 │   ├── restore_all.sh                # Emergency restore
 │   ├── termux_setup.sh               # Termux installer
-│   ├── setup_termux_sdcard.sh        # SD card configuration
-│   └── install_debian_with_ssh.sh    # Debian + OpenSSH installer
+│   ├── setup_termux_sdcard.sh        # SD card configuration (fixed symlinks)
+│   └── install_debian_with_ssh.sh    # Debian + OpenSSH installer (added validation)
 ├── demos/                             # Demo projects
 │   ├── demo_hello_world.py           # Python web server
 │   ├── demo_file_organizer.py        # File organizer

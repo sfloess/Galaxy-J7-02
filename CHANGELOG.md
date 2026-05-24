@@ -4,7 +4,51 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.0.0] - 2026-05-21
+## [1.2.0] - 2026-05-23
+
+### Added
+- **Prerequisite checker script** (`check_prerequisites.sh`)
+  - Validates ADB connection before running scripts
+  - Checks device model and Android version
+  - Detects Termux installation status
+  - Verifies SD card presence and available space
+  - Provides warnings for non-J7 devices
+- **Device compatibility section** in README
+  - Lists known J7 variants (Prime, Pro, 2017, Sky Pro, Perx)
+  - Explains differences between carrier variants
+  - Warns about package name differences
+
+### Fixed
+- **SD card symlink creation** in `setup_termux_sdcard.sh`
+  - Now creates actual symlinks instead of directories
+  - Auto-detects SD card path (external-1 or external-2)
+  - Verifies symlinks were created successfully
+  - Shows available space on SD card
+- **Error handling** in `aggressive_debloat.sh`
+  - Checks ADB connection before starting
+  - Gracefully handles missing packages (device-specific bloat)
+  - Shows which packages were disabled vs skipped
+  - Prevents errors when package doesn't exist
+- **Validation** in `install_debian_with_ssh.sh`
+  - Checks if proot-distro is installed (auto-installs if missing)
+  - Verifies SD card is configured before installation
+  - Warns if less than 1GB free space
+  - Detects existing Debian installations
+  - Verifies installation succeeded before continuing
+  - Shows final installation size
+
+### Changed
+- All scripts now handle fresh Galaxy J7 devices correctly
+- Scripts skip missing packages instead of failing
+- Better error messages throughout
+- Repository ownership transferred to FlossWare organization
+
+### Improved
+- Scripts are now portable across J7 variants
+- Better user feedback during script execution
+- More robust against device-specific differences
+
+## [1.1.0] - 2026-05-21
 
 ### Added
 - Initial release of Galaxy J7 Mini Computer conversion project

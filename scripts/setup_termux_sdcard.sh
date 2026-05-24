@@ -19,11 +19,36 @@ fi
 
 echo ""
 echo "[2/4] Creating directories on SD card..."
-mkdir -p ~/projects-sd
-mkdir -p ~/downloads-sd
-mkdir -p ~/scripts-sd
-mkdir -p ~/backup-sd
-mkdir -p ~/projects-sd/linux-distros
+
+# Detect SD card path
+SDCARD_PATH=""
+if [ -d ~/storage/external-1 ]; then
+    SDCARD_PATH=~/storage/external-1
+elif [ -d ~/storage/external-2 ]; then
+    SDCARD_PATH=~/storage/external-2
+else
+    echo "❌ No SD card found!"
+    echo "   Make sure SD card is inserted and termux-setup-storage was run"
+    exit 1
+fi
+
+echo "✅ SD card detected: $SDCARD_PATH"
+
+# Create actual directories on SD card
+mkdir -p "$SDCARD_PATH/Android/data/com.termux/files/projects"
+mkdir -p "$SDCARD_PATH/Android/data/com.termux/files/downloads"
+mkdir -p "$SDCARD_PATH/Android/data/com.termux/files/scripts"
+mkdir -p "$SDCARD_PATH/Android/data/com.termux/files/backup"
+mkdir -p "$SDCARD_PATH/Android/data/com.termux/files/projects/linux-distros"
+
+# Remove old symlinks if they exist
+rm -f ~/projects-sd ~/downloads-sd ~/scripts-sd ~/backup-sd
+
+# Create symlinks from home to SD card
+ln -s "$SDCARD_PATH/Android/data/com.termux/files/projects" ~/projects-sd
+ln -s "$SDCARD_PATH/Android/data/com.termux/files/downloads" ~/downloads-sd
+ln -s "$SDCARD_PATH/Android/data/com.termux/files/scripts" ~/scripts-sd
+ln -s "$SDCARD_PATH/Android/data/com.termux/files/backup" ~/backup-sd
 
 echo ""
 echo "[3/4] Configuring proot-distro to use SD card..."
@@ -35,12 +60,17 @@ else
 fi
 
 echo ""
-echo "[4/4] Verifying symlinks..."
-if [ -L ~/projects-sd ]; then
-    echo "✅ SD card symlinks created"
+echo "[4/4] Verifying setup..."
+if [ -L ~/projects-sd ] && [ -d ~/projects-sd ]; then
+    echo "✅ SD card symlinks created successfully"
+    echo ""
     ls -lh ~ | grep -- '-sd'
+    echo ""
+    echo "Available space on SD card:"
+    df -h "$SDCARD_PATH" | tail -1 | awk '{print "  " $4 " free of " $2}'
 else
-    echo "⚠️  Symlinks not found (this is normal if run via ADB)"
+    echo "❌ Symlink creation failed"
+    exit 1
 fi
 
 echo ""
