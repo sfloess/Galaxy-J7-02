@@ -18,6 +18,7 @@ Termux:Boot is an official Termux add-on that runs scripts when your Android dev
 **What gets auto-started:**
 - ✅ Termux SSH server (port 8022)
 - ✅ Debian SSH server (port 22, inside proot)
+- ✅ VNC server (port 5901, optional - if desktop installed)
 
 **Important:** Termux:Boot requires:
 1. One-time app launch after installation
@@ -329,6 +330,70 @@ adb shell pm clear com.android.vending
 adb shell pm list packages -3  # List user apps
 adb shell pm uninstall --user 0 PACKAGE_NAME
 ```
+
+## Adding VNC Auto-Start
+
+If you have VNC desktop installed, you can add it to auto-start on boot.
+
+### Prerequisites
+
+- ✅ Termux:Boot installed and configured
+- ✅ Debian with desktop environment installed
+- ✅ VNC server (TigerVNC) installed and working
+
+### Quick Update (Recommended)
+
+**On your phone in Termux:**
+
+```bash
+# Copy and run the update script
+cp /sdcard/Download/update_boot_with_vnc.sh ~/
+bash ~/update_boot_with_vnc.sh
+```
+
+This updates your boot script to include VNC auto-start.
+
+### Manual Update
+
+Replace your current boot script with the VNC-enabled version:
+
+```bash
+# Copy the updated script
+cp /sdcard/Download/start-ssh-and-vnc-servers.sh ~/.termux/boot/
+
+# Remove old script (if different name)
+rm ~/.termux/boot/start-ssh-servers.sh 2>/dev/null
+
+# Make executable
+chmod +x ~/.termux/boot/start-ssh-and-vnc-servers.sh
+```
+
+### What Gets Auto-Started
+
+After update, these services start on boot:
+- ✅ Termux SSH (port 8022)
+- ✅ Debian SSH (port 22 in proot)
+- ✅ VNC server (port 5901)
+
+### Test Without Rebooting
+
+```bash
+bash ~/.termux/boot/start-ssh-and-vnc-servers.sh
+```
+
+Check the log:
+```bash
+cat ~/ssh-boot.log
+```
+
+### After Reboot
+
+1. Phone boots and unlocks (~30 seconds)
+2. Services start automatically
+3. VNC accessible at `YOUR_PHONE_IP:5901`
+4. Password: `cobbler`
+
+**Complete VNC setup guide:** See [VNC_DESKTOP_GUIDE.md](VNC_DESKTOP_GUIDE.md)
 
 ## Alternative Methods
 

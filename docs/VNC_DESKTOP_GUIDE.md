@@ -499,19 +499,59 @@ vncserver -list
 
 ### Auto-Start VNC on Boot
 
-Add to SSH auto-start script:
+VNC can automatically start when your phone boots using Termux:Boot.
+
+**Prerequisites:**
+- ✅ Termux:Boot installed (see [TERMUX_BOOT_SETUP.md](TERMUX_BOOT_SETUP.md))
+- ✅ VNC already set up and working
+- ✅ Debian and desktop installed
+
+**Option 1: Automated Update (Recommended)**
+
+On your phone in Termux:
 
 ```bash
-# Edit boot script
-nano ~/.termux/boot/start-ssh-servers.sh
-
-# Add at the end:
-proot-distro login debian -- bash -c "
-    vncserver :1 -geometry 1280x720 -depth 24
-" &
+# Copy and run the update script
+cp /sdcard/Download/update_boot_with_vnc.sh ~/
+bash ~/update_boot_with_vnc.sh
 ```
 
-**Note:** Only works if Termux:Boot is installed and phone is unlocked.
+This updates your boot script to start:
+- ✅ Termux SSH (port 8022)
+- ✅ Debian SSH (port 22 in proot)
+- ✅ VNC server (port 5901)
+
+**Option 2: Manual Update**
+
+```bash
+# Copy the updated boot script
+cp /sdcard/Download/start-ssh-and-vnc-servers.sh ~/.termux/boot/
+
+# Remove old script (if exists)
+rm ~/.termux/boot/start-ssh-servers.sh 2>/dev/null
+
+# Make executable
+chmod +x ~/.termux/boot/start-ssh-and-vnc-servers.sh
+```
+
+**Test Without Rebooting:**
+
+```bash
+bash ~/.termux/boot/start-ssh-and-vnc-servers.sh
+```
+
+**After Reboot:**
+
+1. Phone boots up (must be unlocked for script to run)
+2. Wait ~30 seconds for network and services to start
+3. VNC should be accessible at `YOUR_PHONE_IP:5901`
+4. Check logs: `cat ~/ssh-boot.log`
+
+**Important Notes:**
+- ⚠️ Phone must be **unlocked** after boot for script to run
+- ⚠️ VNC only starts if Debian and TigerVNC are already installed
+- ⚠️ Wait ~30 seconds after boot for all services to start
+- ✅ VNC runs in background with minimal battery impact
 
 ### Security Improvements
 

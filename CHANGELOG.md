@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.4.2] - 2026-05-24
+
+### Added
+- **VNC Auto-Start on Boot** - VNC can now automatically start when phone boots
+  - Updated boot script: `start-ssh-and-vnc-servers.sh`
+  - Auto-start helper script: `update_boot_with_vnc.sh`
+  - VNC starts on port 5901 automatically if desktop is installed
+  - Runs in background with SSH servers
+  - Complete setup script: `setup_vnc_complete.sh` for first-time VNC installation
+
+### Changed
+- **VNC_DESKTOP_GUIDE.md** - Added comprehensive auto-start section
+  - Automated update instructions
+  - Manual update instructions  
+  - Testing and verification steps
+  - Post-reboot behavior documentation
+- **TERMUX_BOOT_SETUP.md** - Added VNC to auto-started services list
+  - New section: "Adding VNC Auto-Start"
+  - Integration with existing boot configuration
+  - Links to VNC guide for complete setup
+
+### Documentation
+- **Quick VNC Setup Instructions** - Created quick_vnc_setup.txt for phone reference
+- All VNC scripts now available in `/sdcard/Download/`
+
 ## [1.4.1] - 2026-05-24
 
 ### Added
