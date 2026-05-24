@@ -61,7 +61,8 @@ These scripts **may work** on other Galaxy J7 models but with differences:
 
 **Option 1: Minimal Setup** (~100MB) - Recommended for beginners  
 Essential tools only: Termux + SSH + Git + htop  
-📖 Guide: [docs/MINIMAL_SETUP_GUIDE.md](docs/MINIMAL_SETUP_GUIDE.md)
+📖 Guide: [docs/MINIMAL_SETUP_GUIDE.md](docs/MINIMAL_SETUP_GUIDE.md)  
+🚀 **NEW:** [Remote install via SSH](docs/SSH_REMOTE_INSTALL.md) - no need to touch phone!
 
 **Option 2: Minimal + Debian** (~250MB) - Recommended for developers  
 Adds full Linux with apt package manager  
@@ -266,9 +267,10 @@ See `docs/AUTO_START_SSH.md` for complete SSH auto-start guide.
 Samsung-Galaxy-J7/
 ├── README.md                          # This file
 ├── docs/                              # Documentation
-│   ├── MINIMAL_SETUP_GUIDE.md        # ⭐ NEW: Minimal installation guide
-│   ├── TERMUX_BOOT_SETUP.md          # ⭐ NEW: Complete Termux:Boot guide
-│   ├── VNC_DESKTOP_GUIDE.md          # ⭐ NEW: Complete VNC/desktop guide
+│   ├── SSH_REMOTE_INSTALL.md         # ⭐ NEW: Install everything remotely via SSH
+│   ├── MINIMAL_SETUP_GUIDE.md        # ⭐ Minimal installation guide
+│   ├── VNC_DESKTOP_GUIDE.md          # ⭐ Complete VNC/desktop guide
+│   ├── TERMUX_BOOT_SETUP.md          # ⭐ Complete Termux:Boot guide
 │   ├── AUTO_START_SSH.md             # Auto-start SSH server on boot
 │   ├── TERMUX_DEBIAN_GUIDE.md        # Debian + SSH complete guide
 │   ├── TERMUX_QUICK_START.md         # Termux quick reference

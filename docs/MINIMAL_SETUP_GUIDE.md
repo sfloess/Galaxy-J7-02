@@ -76,6 +76,20 @@ adb push scripts/setup_termux_sdcard.sh /sdcard/Download/
 
 ## Minimal Installation
 
+> **🚀 Can install remotely via SSH!** See [SSH_REMOTE_INSTALL.md](SSH_REMOTE_INSTALL.md) for installing from your computer without touching the phone.
+
+### Option 1: Install Remotely (Recommended)
+
+From your computer via SSH:
+
+```bash
+ssh -p 8022 u0_a181@YOUR_PHONE_IP "/data/data/com.termux/files/usr/bin/bash all_in_one_setup.sh"
+```
+
+See [SSH_REMOTE_INSTALL.md](SSH_REMOTE_INSTALL.md) for complete SSH setup guide.
+
+### Option 2: Install on Phone
+
 On your phone, open Termux and run:
 
 ```bash

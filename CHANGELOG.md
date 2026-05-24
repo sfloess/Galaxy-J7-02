@@ -4,6 +4,44 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.4.3] - 2026-05-24
+
+### Added
+- **SSH_REMOTE_INSTALL.md** - Complete guide for remote installation via SSH
+  - SSH key-based authentication setup (works after reboot without password)
+  - Remote installation of VNC, desktop, and all services
+  - Completely hands-free installation from computer
+  - Step-by-step and automated installation options
+  - Troubleshooting SSH connection issues
+  - Why SSH keys work when passwords don't (after reboot)
+  - Advanced SSH config file setup
+  - Security best practices for SSH key management
+
+### Changed
+- **VNC_DESKTOP_GUIDE.md** - Added remote SSH installation option
+  - SSH installation now listed as Option 1 (recommended)
+  - Direct phone installation as Option 2
+  - Reference to complete SSH guide
+  
+- **MINIMAL_SETUP_GUIDE.md** - Added remote SSH installation option
+  - SSH installation prominently featured
+  - Clear choice between remote and local installation
+  
+- **README.md** - Highlighted remote SSH installation capability
+  - Added SSH_REMOTE_INSTALL.md to documentation structure
+  - "Remote install via SSH" callout on minimal setup option
+
+### Documentation
+- All installation guides now offer remote SSH installation as primary method
+- SSH key authentication documented as solution to post-reboot password issues
+- Complete troubleshooting for SSH connection problems
+
+### Implementation Details
+- **Proven working:** Successfully installed VNC remotely via SSH key authentication
+- **Installation time:** 15-20 minutes completely automated
+- **Key insight:** SSH keys work immediately after reboot; passwords require termux-auth package
+- **All-in-one script:** `all_in_one_setup.sh` installs everything remotely
+
 ## [1.4.2] - 2026-05-24
 
 ### Added

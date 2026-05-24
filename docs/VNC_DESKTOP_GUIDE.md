@@ -31,7 +31,20 @@ VNC (Virtual Network Computing) allows you to access a graphical desktop environ
 
 ## Installation
 
-### Quick Install (Recommended)
+> **💡 Remote Installation Available!** You can install VNC completely remotely via SSH without touching your phone. See [SSH_REMOTE_INSTALL.md](SSH_REMOTE_INSTALL.md) for complete guide.
+
+### Option 1: Remote Installation via SSH (Recommended)
+
+Install everything from your computer without touching the phone:
+
+```bash
+# From your computer
+ssh -p 8022 u0_a181@YOUR_PHONE_IP "/data/data/com.termux/files/usr/bin/bash all_in_one_setup.sh"
+```
+
+**Complete guide:** [SSH_REMOTE_INSTALL.md](SSH_REMOTE_INSTALL.md)
+
+### Option 2: Direct Installation on Phone
 
 Use the minimal desktop installation script:
 
