@@ -36,7 +36,7 @@ mkdir -p $PREFIX/etc/ssh
 if [ ! -f $PREFIX/etc/ssh/sshd_config ]; then
     # Generate default config first
     sshd 2>/dev/null
-    sleep 1
+    sleep 1  # Wait for sshd to generate config files
     pkill sshd
 fi
 

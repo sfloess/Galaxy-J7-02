@@ -14,7 +14,7 @@ if [ -d ~/storage ]; then
 else
     echo "[1/4] Setting up storage access..."
     termux-setup-storage
-    sleep 2
+    # Note: termux-setup-storage waits for user permission, no sleep needed
 fi
 
 echo ""
@@ -84,8 +84,6 @@ echo "  ~/downloads-sd/     - Download large files here"
 echo "  ~/scripts-sd/       - Shell/Python scripts"
 echo "  ~/backup-sd/        - Backups"
 echo "  ~/projects-sd/linux-distros/ - Debian installations"
-echo ""
-echo "SD card has 81GB free space!"
 echo ""
 echo "Next: Install Debian with: bash ~/install_debian_with_ssh.sh"
 echo ""

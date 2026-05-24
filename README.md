@@ -75,8 +75,6 @@ This validates:
 
 ### 1. Debloat the Device
 
-### 1. Debloat the Device
-
 Connect your phone via USB with ADB enabled:
 
 ```bash
@@ -100,16 +98,20 @@ Connect your phone via USB with ADB enabled:
 
 ### 2. Install Termux
 
-Apps are pre-downloaded in this repo:
+Download and install from official sources:
 
-```bash
-adb install apps/F-Droid.apk
-adb install apps/termux.apk
-```
+**F-Droid** (open source app store):
+- Download: https://f-droid.org/
+- Install via: `adb install F-Droid.apk`
 
-Or download fresh copies:
-- [F-Droid](https://f-droid.org/)
-- [Termux](https://github.com/termux/termux-app/releases)
+**Termux** (Linux terminal):
+- Download: https://f-droid.org/packages/com.termux/
+- Or: https://github.com/termux/termux-app/releases
+- Install via: `adb install termux.apk`
+
+**Hacker's Keyboard** (optional, better for terminal):
+- Download: https://f-droid.org/packages/org.pocketworkstation.pckeyboard/
+- Install via: `adb install hackerskeyboard.apk`
 
 ### 3. Setup Termux Environment
 

@@ -74,15 +74,15 @@ fi
 echo ""
 echo "[5/6] Checking storage..."
 INTERNAL=$(adb shell df /data 2>/dev/null | tail -1 | awk '{print $4}')
-if [ -n "$INTERNAL" ]; then
-    INTERNAL_GB=$(echo "scale=1; $INTERNAL / 1024 / 1024" | bc 2>/dev/null)
+if [ -n "$INTERNAL" ] && [ "$INTERNAL" -gt 0 ] 2>/dev/null; then
+    INTERNAL_GB=$(awk "BEGIN {printf \"%.1f\", $INTERNAL / 1024 / 1024}")
     echo "✅ Internal storage free: ${INTERNAL_GB}GB"
 fi
 
 # Check for SD card
 SDCARD=$(adb shell df 2>/dev/null | grep "/storage/.*-.*" | head -1 | awk '{print $4}')
-if [ -n "$SDCARD" ]; then
-    SDCARD_GB=$(echo "scale=1; $SDCARD / 1024 / 1024" | bc 2>/dev/null)
+if [ -n "$SDCARD" ] && [ "$SDCARD" -gt 0 ] 2>/dev/null; then
+    SDCARD_GB=$(awk "BEGIN {printf \"%.1f\", $SDCARD / 1024 / 1024}")
     SDCARD_PATH=$(adb shell df 2>/dev/null | grep "/storage/.*-.*" | head -1 | awk '{print $6}')
     echo "✅ SD card found: ${SDCARD_GB}GB free at $SDCARD_PATH"
 else

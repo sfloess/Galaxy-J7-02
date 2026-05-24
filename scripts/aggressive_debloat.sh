@@ -118,7 +118,9 @@ echo "🗑️  Phase 7: Samsung System Services (non-critical)"
 
 disable_package com.samsung.android.app.soundpicker
 disable_package com.sec.android.app.soundalive
-disable_package com.samsung.android.location  # Warning: may affect GPS
+# ⚠️  WARNING: Disabling location service may break GPS and navigation apps!
+# Only uncomment if you don't use location services:
+# disable_package com.samsung.android.location
 disable_package com.samsung.networkui
 disable_package com.samsung.android.timezone.autoupdate_O
 disable_package com.samsung.unifiedsettingservice
@@ -150,7 +152,7 @@ echo ""
 echo "Testing camera..."
 adb shell am start -n com.sec.android.app.camera/.Camera
 
-sleep 3
+sleep 3  # Brief pause to let camera app launch before showing stats
 
 echo ""
 echo "📊 Statistics:"

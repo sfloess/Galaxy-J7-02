@@ -12,7 +12,7 @@ echo ""
 while true; do
     clear
     echo "╔══════════════════════════════════════════════════════════╗"
-    echo "║   System Monitor - $(date +'%Y-%m-%d %H:%M:%S')            "
+    echo "║   System Monitor - $(date +'%Y-%m-%d %H:%M:%S')           ║"
     echo "╚══════════════════════════════════════════════════════════╝"
     echo ""
 

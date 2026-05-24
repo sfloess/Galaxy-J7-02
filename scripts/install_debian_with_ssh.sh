@@ -53,8 +53,8 @@ if [ -n "$SDCARD_PATH" ]; then
     fi
 fi
 
-export PATH=/data/data/com.termux/files/usr/bin:$PATH
-export PROOT_DISTRO_DIR=/data/data/com.termux/files/home/projects-sd/linux-distros
+export PATH=$PREFIX/bin:$PATH
+export PROOT_DISTRO_DIR=$HOME/projects-sd/linux-distros
 
 # Check if Debian already installed
 if [ -d "$PROOT_DISTRO_DIR/debian" ]; then
