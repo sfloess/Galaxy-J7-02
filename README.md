@@ -484,11 +484,28 @@ adb shell pm enable PACKAGE_NAME
 
 ## 🤝 Contributing
 
-This project documents my personal Galaxy J7 conversion. Feel free to:
+Contributions are welcome! This project is open source and we'd love your help.
+
+### How to Contribute
+
 - Fork for your own device
-- Submit issues for problems
+- Submit issues for problems or questions
 - Share improvements via pull requests
 - Add support for other Samsung models
+- Improve documentation
+- Test on different J7 variants
+
+### Code of Conduct
+
+This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to sfloess@nc.rr.com.
+
+### Guidelines
+
+- Test your changes on actual hardware when possible
+- Update documentation for any new features
+- Follow existing code style
+- Include comments for complex operations
+- Verify camera still works after debloat changes
 
 ## ⚠️ Disclaimer
 
@@ -507,7 +524,7 @@ This project documents my personal Galaxy J7 conversion. Feel free to:
 
 ## 📝 License
 
-This project is released under the MIT License. See LICENSE file for details.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
 
 ## 👤 Author
 
@@ -527,4 +544,4 @@ This project is released under the MIT License. See LICENSE file for details.
 
 **Made with ❤️ by someone who wanted a mini computer in their pocket**
 
-Last Updated: 2026-05-21
+Last Updated: 2026-05-23
