@@ -1,5 +1,11 @@
 # Installing Termux & F-Droid - Complete Guide
 
+> **💡 Looking for the full setup guide?** After installing Termux, see:
+> - **[MINIMAL_SETUP_GUIDE.md](MINIMAL_SETUP_GUIDE.md)** - Streamlined setup paths
+> - **[TERMUX_QUICK_START.md](TERMUX_QUICK_START.md)** - Full feature setup
+>
+> This guide covers just the **Termux installation** process.
+
 ## Step 1: Install F-Droid (App Store)
 
 ### Method 1: Download via ADB (Easiest)

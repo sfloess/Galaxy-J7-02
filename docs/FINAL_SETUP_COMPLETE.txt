@@ -25,59 +25,103 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-## 📱 NEXT STEPS - DO THIS ON YOUR PHONE
+## 📱 NEXT STEPS - CHOOSE YOUR PATH
 
-### Step 1: Open Termux
-   Tap the Termux app icon on your phone
+### 🎯 NEW! Three Setup Options:
 
-### Step 2: Copy the setup script
-   Type or paste this in Termux:
+═══════════════════════════════════════════════════════════════════
 
-   cp /sdcard/Download/termux_setup.sh ~
-   chmod +x ~/termux_setup.sh
-   ~/termux_setup.sh
+OPTION A: MINIMAL SETUP (~100MB, 5 minutes)
+   Best for: Beginners, minimal storage use
 
-### Step 3: Wait for installation (5-10 minutes)
-   The script will install:
-   • Python, Node.js, Git, SSH
-   • 30+ development tools
-   • Create project directories
-   • Configure bash with aliases
+   In Termux:
+      cp /sdcard/Download/install_minimal_apps.sh ~
+      bash ~/install_minimal_apps.sh
+      passwd
+      sshd
 
-### Step 4: Grant storage access
-   When prompted, TAP "ALLOW"
+   Installs: Git, Vim, SSH, htop, proot-distro
+   See: /sdcard/Download/MINIMAL_SETUP_GUIDE.md
 
-### Step 5: Copy demo files
-   After setup completes:
+═══════════════════════════════════════════════════════════════════
 
-   mkdir -p ~/projects/demos
-   cp /sdcard/Download/demo_*.py ~/projects/demos/
-   cp /sdcard/Download/demo_*.sh ~/projects/demos/
-   chmod +x ~/projects/demos/*.sh
+OPTION B: MINIMAL + DEBIAN (~250MB, 10 minutes)
+   Best for: Developers who need full Linux
 
-### Step 6: Try your first demo
-   python ~/projects/demos/demo_hello_world.py
+   After Option A:
+      cp /sdcard/Download/install_debian_with_ssh.sh ~
+      bash ~/install_debian_with_ssh.sh
 
-   Then open Firefox and visit: http://localhost:8080
+   Adds: Full Debian Linux with apt package manager
+   See: /sdcard/Download/TERMUX_DEBIAN_GUIDE.md
+
+═══════════════════════════════════════════════════════════════════
+
+OPTION C: MINIMAL + DESKTOP (~650MB, 20 minutes)
+   Best for: Remote desktop access via VNC
+
+   After Option B:
+      cp /sdcard/Download/install_desktop_minimal.sh ~
+      bash ~/install_desktop_minimal.sh
+      bash ~/start_desktop.sh
+
+   Adds: LXDE desktop + VNC server
+   Connect: VNC client to YOUR_IP:5901
+
+═══════════════════════════════════════════════════════════════════
+
+OPTION D: FULL SETUP (Everything, ~1.2GB, 45 minutes)
+   Best for: Advanced users who want all features
+
+   In Termux:
+      cp /sdcard/Download/termux_setup.sh ~
+      bash ~/termux_setup.sh
+
+   Then follow TERMUX_QUICK_START.md on your phone
+
+═══════════════════════════════════════════════════════════════════
+
+📖 ALL GUIDES AVAILABLE IN: /sdcard/Download/
+   • MINIMAL_SETUP_GUIDE.md - Progressive installation paths
+   • TERMUX_BOOT_SETUP.md - Auto-start SSH on boot
+   • TERMUX_DEBIAN_GUIDE.md - Full Debian setup
+   • TERMUX_QUICK_START.md - Complete Termux guide
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-## 📚 DOCUMENTATION FILES (in /home/sfloess/tmp/adb/)
+## 📚 DOCUMENTATION FILES (on phone: /sdcard/Download/)
 
-   📄 TERMUX_QUICK_START.md         - Complete Termux guide
-   📄 mini_computer_setup_guide.md  - Mini computer usage guide
-   📄 mini_computer_conversion_summary.md - Detailed report
-   📄 DEBLOAT_SUMMARY.txt           - Debloat statistics
-   📄 storage_and_bloatware_report.md - Storage analysis
-   📄 samsung_j7_bloatware_removal.md - Bloatware reference
+   📖 Setup Guides:
+      MINIMAL_SETUP_GUIDE.md        - ⭐ NEW! Progressive setup paths
+      TERMUX_BOOT_SETUP.md          - ⭐ NEW! Auto-start SSH on boot
+      TERMUX_DEBIAN_GUIDE.md        - Complete Debian + SSH guide
+      TERMUX_QUICK_START.md         - Full Termux setup guide
+      AUTO_START_SSH.md             - SSH auto-start configuration
 
-   🔧 termux_setup.sh               - Main Termux setup script
-   🔧 aggressive_debloat.sh         - Debloat script used
-   🔧 restore_all.sh                - Emergency restore
+   📄 Reference Documentation:
+      mini_computer_setup_guide.md  - Usage guide
+      mini_computer_conversion_summary.md - Detailed report
+      DEBLOAT_SUMMARY.txt           - Debloat statistics
+      storage_and_bloatware_report.md - Storage analysis
+      samsung_j7_bloatware_removal.md - Bloatware reference
 
-   🎯 demo_hello_world.py           - Web server demo
-   🎯 demo_file_organizer.py        - File organizer demo
-   🎯 demo_system_monitor.sh        - System monitor demo
+   🔧 Setup Scripts:
+      install_minimal_apps.sh       - ⭐ NEW! Minimal setup (~100MB)
+      install_desktop_minimal.sh    - ⭐ NEW! LXDE desktop (~400MB)
+      install_debian_with_ssh.sh    - Debian + SSH installer
+      termux_setup.sh               - Full Termux setup
+      setup_termux_sdcard.sh        - SD card configuration
+      setup_ssh_autostart.sh        - SSH auto-start setup
+
+   🔧 Management Scripts:
+      aggressive_debloat.sh         - Debloat script used
+      check_prerequisites.sh        - Compatibility checker
+      restore_all.sh                - Emergency restore
+
+   🎯 Demo Projects:
+      demo_hello_world.py           - Web server demo
+      demo_file_organizer.py        - File organizer demo
+      demo_system_monitor.sh        - System monitor demo
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

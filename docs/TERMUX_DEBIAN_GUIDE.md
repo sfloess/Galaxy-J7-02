@@ -2,6 +2,13 @@
 
 Complete guide for setting up Termux with Debian Linux on your Samsung Galaxy J7.
 
+> **💡 Looking for a simpler setup?** Check out [MINIMAL_SETUP_GUIDE.md](MINIMAL_SETUP_GUIDE.md) for streamlined installation paths:
+> - **Minimal** (~100MB): Essential tools only
+> - **Minimal + Debian** (~250MB): Full Linux without desktop
+> - **Minimal + Desktop** (~650MB): LXDE + VNC
+>
+> This guide covers the **full/advanced setup** with all features.
+
 ## Table of Contents
 
 - [Overview](#overview)

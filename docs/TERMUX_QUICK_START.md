@@ -1,5 +1,12 @@
 # 🚀 Termux Quick Start Guide
 
+> **💡 New User?** For a simpler, more modular approach, see [MINIMAL_SETUP_GUIDE.md](MINIMAL_SETUP_GUIDE.md)
+> - Start with just the essentials (~100MB)
+> - Add Debian Linux if needed (~250MB)
+> - Add desktop environment if wanted (~650MB)
+>
+> This guide covers the **full setup** with all tools at once.
+
 ## ✅ Status: Apps Installed!
 - ✅ F-Droid installed
 - ✅ Termux installed  

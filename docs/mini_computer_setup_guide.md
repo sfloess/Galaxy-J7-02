@@ -2,6 +2,14 @@
 
 Your phone is now a lean Android mini computer! Here's how to set it up for maximum productivity.
 
+> **📖 Setup Guides Available:**
+> - **[MINIMAL_SETUP_GUIDE.md](MINIMAL_SETUP_GUIDE.md)** - Start with essentials, add as needed
+> - **[TERMUX_DEBIAN_GUIDE.md](TERMUX_DEBIAN_GUIDE.md)** - Full Debian Linux setup
+> - **[TERMUX_BOOT_SETUP.md](TERMUX_BOOT_SETUP.md)** - Auto-start SSH on boot
+> - **[AUTO_START_SSH.md](AUTO_START_SSH.md)** - SSH auto-start configuration
+>
+> This guide covers **usage and applications**.
+
 ---
 
 ## 🚀 Essential Apps to Install

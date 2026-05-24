@@ -1,11 +1,21 @@
 # Auto-Start SSH Server on Boot
 
-This guide shows how to automatically start an SSH server in Termux when your Galaxy J7 boots, turning it into an always-accessible remote Linux box.
+Quick guide to automatically start SSH servers when your Galaxy J7 boots.
+
+## 📖 Complete Guide Available
+
+For comprehensive installation instructions, troubleshooting, and alternatives, see:
+
+**[TERMUX_BOOT_SETUP.md](TERMUX_BOOT_SETUP.md)** - Complete Termux:Boot installation guide
+
+This document provides a quick-start summary.
+
+---
 
 ## Overview
 
 With Termux:Boot, your phone will:
-- ✅ Start SSH server on boot (no manual intervention)
+- ✅ Start SSH servers on boot (Termux + Debian)
 - ✅ Be accessible via SSH over WiFi
 - ✅ Run in background (minimal battery impact)
 - ✅ Survive reboots
@@ -13,41 +23,47 @@ With Termux:Boot, your phone will:
 ## Prerequisites
 
 - ✅ Termux installed and configured
+- ✅ ~500MB free internal storage for Termux:Boot installation
 - ✅ WiFi connected (static IP recommended)
 - ⚠️ Phone must be unlocked for boot script to run
 
-## Installation
+## Quick Start
 
 ### 1. Install Termux:Boot
 
-From F-Droid or download:
+**From your computer:**
 
 ```bash
-# Download Termux:Boot APK
-adb push apps/termux-boot.apk /sdcard/Download/
+# Download latest version
+wget -O termux-boot.apk "https://github.com/termux/termux-boot/releases/download/v0.8.1/termux-boot-app_v0.8.1%2Bgithub.debug.apk"
 
-# Install on phone
-adb install apps/termux-boot.apk
+# Install via ADB
+adb install termux-boot.apk
 ```
 
-Or install from F-Droid: https://f-droid.org/packages/com.termux.boot/
+**If installation fails with "not enough space"**, see [TERMUX_BOOT_SETUP.md](TERMUX_BOOT_SETUP.md) for storage cleanup procedures.
+
+**If installation fails with "INSTALL_FAILED_SHARED_USER_INCOMPATIBLE"**, you need to download Termux:Boot from the same source as Termux (F-Droid or GitHub).
 
 ### 2. Run Automated Setup Script
 
-**RECOMMENDED:** Use the automated setup script:
+**From your computer:**
 
 ```bash
 # Push script to phone
 adb push scripts/setup_ssh_autostart.sh /sdcard/Download/
+```
 
-# In Termux
-cp /sdcard/Download/setup_ssh_autostart.sh ~
+**On your phone in Termux:**
+
+```bash
+cp /sdcard/Download/setup_ssh_autostart.sh ~/
 bash ~/setup_ssh_autostart.sh
 ```
 
 The script will:
-1. Install OpenSSH
-2. **Ask you to choose authentication method** (see below)
+1. Install OpenSSH (if not already installed)
+2. **Ask you to choose authentication method**
 3. Generate SSH keys
 4. Create boot script
 5. Test SSH server
@@ -635,6 +651,18 @@ After setting up auto-start SSH:
 3. **Test reboot** to ensure it works
 4. **Add to SSH config** on your computer for easy access
 5. **Consider Wake Lock** if you need 24/7 access
+
+---
+
+## 📖 Additional Resources
+
+- **[TERMUX_BOOT_SETUP.md](TERMUX_BOOT_SETUP.md)** - Comprehensive Termux:Boot installation guide
+  - Troubleshooting installation failures
+  - Storage cleanup procedures
+  - Signature compatibility issues
+  - Alternative auto-start methods
+- **[MINIMAL_SETUP_GUIDE.md](MINIMAL_SETUP_GUIDE.md)** - Minimal installation paths
+- **[TERMUX_DEBIAN_GUIDE.md](TERMUX_DEBIAN_GUIDE.md)** - Complete Debian setup
 
 ---
 
