@@ -267,6 +267,7 @@ See `docs/AUTO_START_SSH.md` for complete SSH auto-start guide.
 Samsung-Galaxy-J7/
 ├── README.md                          # This file
 ├── docs/                              # Documentation
+│   ├── ARCHITECTURE.md               # ⭐ NEW: System architecture explained
 │   ├── SSH_REMOTE_INSTALL.md         # ⭐ NEW: Install everything remotely via SSH
 │   ├── MINIMAL_SETUP_GUIDE.md        # ⭐ Minimal installation guide
 │   ├── VNC_DESKTOP_GUIDE.md          # ⭐ Complete VNC/desktop guide

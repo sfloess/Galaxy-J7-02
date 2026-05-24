@@ -7,6 +7,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [1.4.3] - 2026-05-24
 
 ### Added
+- **ARCHITECTURE.md** - System architecture documentation
+  - Explains two-layer architecture philosophy
+  - Termux as lightweight gateway layer (~100-200MB)
+  - Debian as heavy-duty workhorse layer (~650MB-2GB)
+  - How the layers work together complementarily
+  - Storage layout and performance comparison
+  - Use cases for each layer (when to use Termux vs Debian)
+  - Evolution path from minimal to full-featured setup
+  - Car vs Truck analogy for understanding the architecture
+  
 - **SSH_REMOTE_INSTALL.md** - Complete guide for remote installation via SSH
   - SSH key-based authentication setup (works after reboot without password)
   - Remote installation of VNC, desktop, and all services
@@ -28,6 +38,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - Clear choice between remote and local installation
   
 - **README.md** - Highlighted remote SSH installation capability
+  - Added ARCHITECTURE.md to documentation structure
   - Added SSH_REMOTE_INSTALL.md to documentation structure
   - "Remote install via SSH" callout on minimal setup option
 
