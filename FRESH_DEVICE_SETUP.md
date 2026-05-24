@@ -316,6 +316,21 @@ After setup, verify:
 - [ ] SD card accessible in Termux (`ls ~/projects-sd`)
 - [ ] Debian can be entered (`proot-distro login debian`)
 - [ ] SSH server installs in Debian
+- [ ] (Optional) SSH auto-starts on boot
+
+## Optional: Auto-Start SSH Server
+
+To make your phone remotely accessible 24/7:
+
+```bash
+# In Termux
+bash ~/setup_ssh_autostart.sh
+
+# Then install Termux:Boot from F-Droid
+# Open it once to grant permissions
+```
+
+See `docs/AUTO_START_SSH.md` for complete guide.
 
 ## Getting Help
 

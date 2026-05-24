@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [1.2.0] - 2026-05-23
 
 ### Added
+- **SSH Auto-Start on Boot** (`setup_ssh_autostart.sh` + `AUTO_START_SSH.md`)
+  - Automatically start SSH server when phone boots
+  - Requires Termux:Boot app (from F-Droid)
+  - Turn Galaxy J7 into 24/7 accessible remote Linux box
+  - Includes security guide, configuration examples, troubleshooting
+  - Battery-efficient background operation
 - **Prerequisite checker script** (`check_prerequisites.sh`)
   - Validates ADB connection before running scripts
   - Checks device model and Android version

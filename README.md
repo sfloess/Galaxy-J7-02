@@ -200,12 +200,39 @@ ssh root@YOUR_PHONE_IP
 
 See `docs/TERMUX_DEBIAN_GUIDE.md` for complete instructions.
 
+### 6. Auto-Start SSH Server (Optional)
+
+Make your phone accessible remotely 24/7:
+
+```bash
+adb push scripts/setup_ssh_autostart.sh /sdcard/Download/
+```
+
+In Termux:
+
+```bash
+cp /sdcard/Download/setup_ssh_autostart.sh ~
+bash ~/setup_ssh_autostart.sh
+```
+
+Then install **Termux:Boot** from F-Droid to enable auto-start on boot.
+
+**Access your phone remotely:**
+
+```bash
+# From any device on your network
+ssh -p 8022 <YOUR_PHONE_IP>
+```
+
+See `docs/AUTO_START_SSH.md` for complete SSH auto-start guide.
+
 ## 📁 Repository Structure
 
 ```
 Samsung-Galaxy-J7/
 ├── README.md                          # This file
 ├── docs/                              # Documentation
+│   ├── AUTO_START_SSH.md             # ⭐ NEW: Auto-start SSH server on boot
 │   ├── DEBLOAT_SUMMARY.txt           # Bloatware removal summary
 │   ├── FINAL_SETUP_COMPLETE.txt      # Complete setup guide
 │   ├── TERMUX_QUICK_START.md         # Termux quick reference
@@ -216,8 +243,9 @@ Samsung-Galaxy-J7/
 │   ├── storage_and_bloatware_report.md     # Storage analysis
 │   └── install_termux_fdroid.md      # Installation guide
 ├── scripts/                           # All scripts
-│   ├── check_prerequisites.sh        # ⭐ NEW: Check device compatibility
+│   ├── check_prerequisites.sh        # ⭐ Check device compatibility
 │   ├── aggressive_debloat.sh         # Main debloat script (improved error handling)
+│   ├── setup_ssh_autostart.sh        # ⭐ NEW: Auto-start SSH on boot
 │   ├── safe_bloatware_removal.sh     # Conservative debloat
 │   ├── disable_bloatware.sh          # Phase 1 removal
 │   ├── disable_more_bloatware.sh     # Phase 2 removal
