@@ -40,28 +40,90 @@ if [ ! -f $PREFIX/etc/ssh/sshd_config ]; then
     pkill sshd
 fi
 
-# Ensure password authentication is enabled
+# Configure SSH authentication method
+echo ""
+echo "🔒 SSH Authentication Method:"
+echo "   1) SSH keys only (RECOMMENDED - most secure)"
+echo "   2) Password only (less secure, but simpler)"
+echo "   3) Both password and keys (convenient)"
+echo ""
+read -p "Choose option (1-3) [default: 1]: " -n 1 -r
+echo
+if [ -z "$REPLY" ]; then
+    REPLY="1"
+fi
+
 if [ -f $PREFIX/etc/ssh/sshd_config ]; then
     # Backup original config
     cp $PREFIX/etc/ssh/sshd_config $PREFIX/etc/ssh/sshd_config.bak
 
-    # Enable password authentication (explicitly)
-    if grep -q "^PasswordAuthentication" $PREFIX/etc/ssh/sshd_config; then
-        sed -i 's/^PasswordAuthentication.*/PasswordAuthentication yes/' $PREFIX/etc/ssh/sshd_config
-    else
-        echo "PasswordAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
-    fi
-
-    # Allow public key authentication too
-    if grep -q "^PubkeyAuthentication" $PREFIX/etc/ssh/sshd_config; then
-        sed -i 's/^PubkeyAuthentication.*/PubkeyAuthentication yes/' $PREFIX/etc/ssh/sshd_config
-    else
-        echo "PubkeyAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
-    fi
-
-    echo "✅ SSH server configured for password and key authentication"
+    case $REPLY in
+        1)
+            # Keys only
+            if grep -q "^PubkeyAuthentication" $PREFIX/etc/ssh/sshd_config; then
+                sed -i 's/^PubkeyAuthentication.*/PubkeyAuthentication yes/' $PREFIX/etc/ssh/sshd_config
+            else
+                echo "PubkeyAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
+            fi
+            if grep -q "^PasswordAuthentication" $PREFIX/etc/ssh/sshd_config; then
+                sed -i 's/^PasswordAuthentication.*/PasswordAuthentication no/' $PREFIX/etc/ssh/sshd_config
+            else
+                echo "PasswordAuthentication no" >> $PREFIX/etc/ssh/sshd_config
+            fi
+            echo "✅ SSH configured for key-based authentication only (most secure)"
+            AUTH_METHOD="keys"
+            ;;
+        2)
+            # Password only
+            if grep -q "^PasswordAuthentication" $PREFIX/etc/ssh/sshd_config; then
+                sed -i 's/^PasswordAuthentication.*/PasswordAuthentication yes/' $PREFIX/etc/ssh/sshd_config
+            else
+                echo "PasswordAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
+            fi
+            if grep -q "^PubkeyAuthentication" $PREFIX/etc/ssh/sshd_config; then
+                sed -i 's/^PubkeyAuthentication.*/PubkeyAuthentication no/' $PREFIX/etc/ssh/sshd_config
+            else
+                echo "PubkeyAuthentication no" >> $PREFIX/etc/ssh/sshd_config
+            fi
+            echo "⚠️  SSH configured for password authentication only"
+            echo "   You MUST set a STRONG password with: passwd"
+            AUTH_METHOD="password"
+            ;;
+        3)
+            # Both methods
+            if grep -q "^PubkeyAuthentication" $PREFIX/etc/ssh/sshd_config; then
+                sed -i 's/^PubkeyAuthentication.*/PubkeyAuthentication yes/' $PREFIX/etc/ssh/sshd_config
+            else
+                echo "PubkeyAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
+            fi
+            if grep -q "^PasswordAuthentication" $PREFIX/etc/ssh/sshd_config; then
+                sed -i 's/^PasswordAuthentication.*/PasswordAuthentication yes/' $PREFIX/etc/ssh/sshd_config
+            else
+                echo "PasswordAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
+            fi
+            echo "✅ SSH configured for both password and key authentication"
+            echo "   Set a STRONG password with: passwd"
+            AUTH_METHOD="both"
+            ;;
+        *)
+            # Invalid choice, default to keys only (safest)
+            echo "⚠️  Invalid option. Defaulting to keys only (safest)"
+            if grep -q "^PubkeyAuthentication" $PREFIX/etc/ssh/sshd_config; then
+                sed -i 's/^PubkeyAuthentication.*/PubkeyAuthentication yes/' $PREFIX/etc/ssh/sshd_config
+            else
+                echo "PubkeyAuthentication yes" >> $PREFIX/etc/ssh/sshd_config
+            fi
+            if grep -q "^PasswordAuthentication" $PREFIX/etc/ssh/sshd_config; then
+                sed -i 's/^PasswordAuthentication.*/PasswordAuthentication no/' $PREFIX/etc/ssh/sshd_config
+            else
+                echo "PasswordAuthentication no" >> $PREFIX/etc/ssh/sshd_config
+            fi
+            AUTH_METHOD="keys"
+            ;;
+    esac
 else
     echo "⚠️  sshd_config not found, using defaults"
+    AUTH_METHOD="default"
 fi
 
 # Generate SSH keys if they don't exist
@@ -118,11 +180,26 @@ echo "╚═══════════════════════�
 echo ""
 echo "📋 Next Steps:"
 echo ""
-echo "1. Set a password for SSH access:"
-echo "   passwd"
-echo "   (Choose a strong password!)"
-echo ""
-echo "2. Install Termux:Boot app:"
+
+# Show appropriate instructions based on auth method
+if [ "$AUTH_METHOD" = "password" ] || [ "$AUTH_METHOD" = "both" ]; then
+    echo "1. Set a STRONG password for SSH access:"
+    echo "   passwd"
+    echo "   (Use a long, random password - this is network accessible!)"
+    echo ""
+    echo "2. Install Termux:Boot app:"
+elif [ "$AUTH_METHOD" = "keys" ]; then
+    echo "1. Copy your SSH public key to this device:"
+    echo "   From your computer, run:"
+    echo "   ssh-copy-id -p 8022 \$(termux-whoami)@YOUR_PHONE_IP"
+    echo "   (Or manually add to ~/.ssh/authorized_keys)"
+    echo ""
+    echo "2. Install Termux:Boot app:"
+else
+    echo "1. Configure SSH authentication"
+    echo ""
+    echo "2. Install Termux:Boot app:"
+fi
 echo "   https://f-droid.org/packages/com.termux.boot/"
 echo ""
 echo "3. Open Termux:Boot app ONCE to grant permissions"

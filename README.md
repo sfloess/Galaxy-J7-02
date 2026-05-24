@@ -22,7 +22,7 @@ Complete guide and scripts to transform a Samsung Galaxy J7 (Verizon) into a min
 | Battery Life | Poor | Better | **Improved** |
 | **Linux Environment** | None | **Full Debian** | **✅ Added** |
 | **SSH Server** | None | **OpenSSH** | **✅ Added** |
-| **Storage Available** | Limited | **81GB SD card** | **✅ Configured** |
+| **Storage Available** | Limited | **SD card** | **✅ Configured** |
 
 ## ⚠️ Device Compatibility
 
@@ -148,7 +148,7 @@ cp /sdcard/Download/setup_termux_sdcard.sh ~
 bash ~/setup_termux_sdcard.sh
 ```
 
-This creates symlinks to use your SD card (81GB free) for:
+This creates symlinks to use your SD card for:
 - Projects and code
 - Downloads
 - Scripts

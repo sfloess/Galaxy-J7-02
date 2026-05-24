@@ -7,6 +7,7 @@ Then visit: http://localhost:8080 in your browser
 
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
+import sys
 from datetime import datetime
 
 class HelloWorldHandler(BaseHTTPRequestHandler):
@@ -98,7 +99,7 @@ class HelloWorldHandler(BaseHTTPRequestHandler):
 
             data = {
                 'hostname': hostname,
-                'python_version': '3.x',
+                'python_version': sys.version.split()[0],
                 'endpoints': ['/', '/api', '/info']
             }
             self.wfile.write(json.dumps(data, indent=2).encode())
