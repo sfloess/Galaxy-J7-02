@@ -68,11 +68,14 @@ echo ""
 echo "🗑️  Phase 3: Review Download Folder"
 echo "-----------------------------------"
 
-TOTAL_FILES=$(adb shell "ls /sdcard/Download/ 2>/dev/null | wc -l")
+# Single adb call - capture listing and derive count from it
+LISTING=$(adb shell "ls -lh /sdcard/Download/ 2>/dev/null | tail -n +2 | awk '{print \$5, \$NF}'")
+TOTAL_FILES=$(echo "$LISTING" | wc -l)
+
 echo "Total files in Download folder: $TOTAL_FILES"
 echo ""
 echo "Largest files (showing top 20):"
-adb shell "ls -lh /sdcard/Download/ 2>/dev/null | tail -n +2 | awk '{print \$5, \$NF}'" | head -20
+echo "$LISTING" | head -20
 
 if [ "$TOTAL_FILES" -gt 20 ]; then
     echo ""

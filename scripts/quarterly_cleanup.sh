@@ -74,12 +74,16 @@ for app in $APPS; do
     fi
 
     echo -n "  $app... "
-    adb shell pm clear "$app" --cache-only 2>&1 | grep -q "Success" && echo "✓" || echo "✗"
-    ((CACHE_COUNT++))
+    if adb shell pm clear "$app" --cache-only 2>&1 | grep -q "Success"; then
+        echo "✓"
+        ((CACHE_COUNT++))
+    else
+        echo "✗"
+    fi
 done
 
 echo ""
-echo "App caches: $CACHE_COUNT cleared, $CACHE_SKIPPED protected"
+echo "App caches: $CACHE_COUNT cleared successfully, $CACHE_SKIPPED protected"
 
 echo ""
 echo "🗑️  Phase 3: Deep System Cleanup"
