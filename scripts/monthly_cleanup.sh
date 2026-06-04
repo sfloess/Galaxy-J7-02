@@ -68,8 +68,9 @@ echo ""
 echo "🗑️  Phase 3: Review Download Folder"
 echo "-----------------------------------"
 
-# Single adb call - capture listing and derive count from it
-LISTING=$(adb shell "ls -lh /sdcard/Download/ 2>/dev/null | awk 'NR>1 {print \$5, \$NF}'")
+# Single adb call - capture sorted listing and derive count from it
+# Sort in the adb pipeline to avoid bash variable expansion overhead
+LISTING=$(adb shell "ls -lh /sdcard/Download/ 2>/dev/null | awk 'NR>1 {print \$5, \$NF}' | sort -rh")
 
 # Count files (handle empty directory case)
 if [[ -z "$LISTING" ]]; then
@@ -81,7 +82,7 @@ fi
 echo "Total files in Download folder: $TOTAL_FILES"
 echo ""
 echo "Largest files (showing top 20):"
-echo "$LISTING" | sort -rh | head -20
+echo "$LISTING" | head -20
 
 if [ "$TOTAL_FILES" -gt 20 ]; then
     echo ""
