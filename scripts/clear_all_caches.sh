@@ -60,7 +60,7 @@ for pkg in $USER_APPS; do
     # Check if this app should be skipped
     if echo "$SKIP_APPS" | grep -q "$pkg"; then
         echo -n "  [$USER_COUNT] $pkg... "
-        echo "⊘ Skipped (launcher - preserving settings)"
+        echo "⊘ Skipped (protected app)"
         ((USER_SKIPPED++))
         continue
     fi

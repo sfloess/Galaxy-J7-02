@@ -56,13 +56,30 @@ echo ""
 echo "🗑️  Phase 2: Clear All App Caches"
 echo "-----------------------------------"
 
+# Apps to skip (consistent with other scripts)
+SKIP_APPS="com.teslacoilsw.launcher com.alphainventor.filemanager com.authy.authy org.fedorahosted.freeotp com.android.vending com.google.android.gms de.blinkt.openvpn"
+
 # List of all installed user apps
 APPS=$(adb shell pm list packages -3 | cut -d: -f2)
+CACHE_COUNT=0
+CACHE_SKIPPED=0
 
 for app in $APPS; do
+    # Skip protected apps (GMS already cleared in Phase 1, others are critical)
+    if echo "$SKIP_APPS" | grep -q "$app"; then
+        echo -n "  $app... "
+        echo "⊘ Skipped (protected app)"
+        ((CACHE_SKIPPED++))
+        continue
+    fi
+
     echo -n "  $app... "
     adb shell pm clear "$app" --cache-only 2>&1 | grep -q "Success" && echo "✓" || echo "✗"
+    ((CACHE_COUNT++))
 done
+
+echo ""
+echo "App caches: $CACHE_COUNT cleared, $CACHE_SKIPPED protected"
 
 echo ""
 echo "🗑️  Phase 3: Deep System Cleanup"

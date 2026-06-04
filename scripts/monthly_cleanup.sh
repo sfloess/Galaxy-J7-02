@@ -68,8 +68,16 @@ echo ""
 echo "🗑️  Phase 3: Review Download Folder"
 echo "-----------------------------------"
 
-echo "Files in Download folder:"
+TOTAL_FILES=$(adb shell "ls /sdcard/Download/ 2>/dev/null | wc -l")
+echo "Total files in Download folder: $TOTAL_FILES"
+echo ""
+echo "Largest files (showing top 20):"
 adb shell "ls -lh /sdcard/Download/ 2>/dev/null | tail -n +2 | awk '{print \$5, \$NF}'" | head -20
+
+if [ "$TOTAL_FILES" -gt 20 ]; then
+    echo ""
+    echo "💡 Note: $((TOTAL_FILES - 20)) more files not shown"
+fi
 
 echo ""
 echo "💡 Tip: Manually review /sdcard/Download/ for files to delete"
