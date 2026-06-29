@@ -1,6 +1,8 @@
 #!/bin/bash
 # Re-enable all disabled packages to restore camera functionality
 
+set -euo pipefail
+
 # Check ADB connection first
 if ! command -v adb &> /dev/null; then
     echo "❌ ERROR: ADB not found in PATH"

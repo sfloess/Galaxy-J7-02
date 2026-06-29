@@ -4,6 +4,8 @@
 # This replaces cache-cleaning apps - you can uninstall them after!
 # Estimated time: 3-5 minutes
 
+set -euo pipefail
+
 echo "🧹 Clear All Caches"
 echo "=========================================="
 echo ""

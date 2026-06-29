@@ -3,6 +3,8 @@
 # Run this weekly to maintain optimal storage levels
 # Estimated time: 2 minutes
 
+set -euo pipefail
+
 echo "🧹 Weekly Storage Cleanup"
 echo "=========================================="
 echo ""

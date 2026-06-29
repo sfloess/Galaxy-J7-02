@@ -2,6 +2,8 @@
 # AGGRESSIVE Debloat - Turn Samsung J7 into a mini computer
 # Removes all non-essential bloatware while keeping camera and core Android
 
+set -euo pipefail
+
 # Check ADB connection first
 if ! command -v adb &> /dev/null; then
     echo "❌ ERROR: ADB not found in PATH"

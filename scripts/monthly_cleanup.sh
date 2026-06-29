@@ -3,6 +3,8 @@
 # Run this monthly for deeper cleaning
 # Estimated time: 5 minutes
 
+set -euo pipefail
+
 echo "🧹 Monthly Storage Cleanup"
 echo "=========================================="
 echo ""

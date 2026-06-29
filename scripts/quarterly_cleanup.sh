@@ -4,6 +4,8 @@
 # Estimated time: 10 minutes
 # WARNING: Clears Google Play Services data (requires re-login)
 
+set -euo pipefail
+
 echo "🧹 Quarterly Deep Storage Cleanup"
 echo "=========================================="
 echo ""
