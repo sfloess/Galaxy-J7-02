@@ -1,8 +1,27 @@
-# Samsung Galaxy J7 Debloat Scripts
+# Samsung Galaxy J7 Fleet Worker Nodes
 
-Transform a Samsung Galaxy J7 (Verizon) into a minimal, bloat-free Android device.
+Transform Samsung Galaxy J7 phones into autonomous fleet worker nodes using Termux.
 
-## Quick Start
+## Quick Status
+
+**Phones:** android-j7-01 (✅ working), android-j7-02 (pending)  
+**Auto-start:** SSH + Worker daemon + Fleet registration  
+**Network:** WiFi (192.168.1.248)  
+**Ports:** 8022 (SSH), 9003 (Worker HTTP API)
+
+## Quick Start - Fleet Worker Setup
+
+See [SETUP_GUIDE.md](SETUP_GUIDE.md) for complete fleet worker setup.
+
+**TL;DR:**
+1. Install Termux + Termux:Boot from F-Droid
+2. Disable battery optimization for both apps
+3. Run setup script: `./scripts/setup_fleet_node.sh android-j7-02`
+4. Reboot phone
+
+After boot (and unlock), SSH + worker daemon auto-start in ~90 seconds.
+
+## Quick Start - Debloating (Optional)
 
 **Prerequisites:**
 - Android SDK Platform Tools (ADB)
@@ -128,6 +147,51 @@ adb shell pm list packages -d
 
 GPL v3.0 - See LICENSE file
 
+## Fleet Worker Features
+
+**What Auto-Starts After Boot:**
+- ✅ SSH server (port 8022) - passwordless access from laptop-01
+- ✅ Worker daemon (port 9003) - HTTP API for fleet control
+- ✅ Fleet registration - heartbeat to aio-01:8004
+
+**Worker API:**
+```bash
+# Health check
+curl http://192.168.1.248:9003/health
+
+# Execute command
+curl -X POST http://192.168.1.248:9003/execute \
+  -H "Content-Type: application/json" \
+  -d '{"command": "python3", "args": ["-c", "print(\"Hello!\")"]}'
+```
+
+**SSH Access:**
+```bash
+ssh -p 8022 192.168.1.248
+```
+
+## Architecture
+
+```
+Phone Boot
+    ↓
+Termux:Boot triggered (after unlock)
+    ↓
+~/.termux/boot/start-worker
+    ├─ Start SSH server (port 8022)
+    ├─ Wait for network (ping aio-01)
+    ├─ 30s stabilization delay
+    ├─ Start worker-daemon.py (port 9003)
+    └─ Start worker-register.sh (heartbeat to aio-01:8004)
+```
+
+Total boot time: ~90 seconds from power-on to fully operational.
+
 ## Current Status
 
+**Fleet Workers:**
+- android-j7-01: ✅ Production ready (SSH + daemon auto-start working)
+- android-j7-02: Pending setup
+
+**Debloating:**
 See `currently_disabled.txt` for list of 70 disabled packages and `docs/DEBLOAT_SUMMARY.txt` for detailed results.
